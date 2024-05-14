@@ -1,6 +1,6 @@
 <?php
 
-class Main extends Controller
+class Listado extends Controller
 {
 
 	function __construct()
@@ -10,6 +10,6 @@ class Main extends Controller
 
 	function render()
 	{
-		$this->view->Render('main/index');
+		$this->view->Render('listado/index');
 	}
 }

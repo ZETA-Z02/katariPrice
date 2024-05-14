@@ -1,5 +1,5 @@
 <?php
-class MainModel extends Model{
+class ListadoModel extends Model{
 
     function __construct()
     {
