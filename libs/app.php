@@ -60,12 +60,12 @@ class App
         return false;
       }
       #echo "Segundo: ".$url[1];
-      if (isset($url[1]) && $url[1] == "login") {
+      if (isset($url[1]) && $url[1] == "logIn") {
         $archivoController = "controller/login.php";
         require_once $archivoController;
         $controller = new Login;
         $controller->loadModel('login');
-        $controller->login();
+        $controller->logIn();
         $controller->render();
       } else {
         #echo "nada";
