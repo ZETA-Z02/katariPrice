@@ -6,7 +6,10 @@ class LoginModel extends Model{
         parent::__construct();
     }
     public function validar($usuario,$password){
-        $sql = "SELECT * FROM login WHERE usuario = '$usuario' AND password = '$password'";
+        $sql = "SELECT l.*,p.* FROM login l
+        join personal p
+        on l.idpersonal=p.idpersonal
+        WHERE usuario = '$usuario' AND password = '$password';";
         $res = $this->conn->ConsultaArray($sql);
         return $res;
     }

@@ -73,6 +73,12 @@
                   <span class="nav-item">Registros</span>
                 </a>
               </li>
+              <li>
+                <a href="<?php echo constant('URL')?>calculadora">
+                  <i class="fas fa-calculator"></i>
+                  <span class="nav-item">Calculadora</span>
+                </a>
+              </li>
             </ul>
           </div>
           <div class="cell margin-top-3">
@@ -112,7 +118,7 @@
               <button type="submit"><i class="fas fa-search"></i></button>
             </div>
             <div class="user-info">
-              <span><i class="fas fa-user-tie"></i> Bienvenido: Usuario</span>
+              <span><i class="fas fa-user-tie"></i> Bienvenido: <?php echo $_SESSION['username'];?></span>
               <a href="#"><i class="fas fa-cog"></i></a>
             </div>
           </div>

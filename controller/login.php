@@ -14,8 +14,8 @@ class Login extends Controller
 	}
 	public function logIn()
 	{
-		echo $user = trim(strtolower($_POST['usuario']));
-		echo $pass = trim(strtolower($_POST['password']));
+		$user = trim(strtolower($_POST['usuario']));
+		$pass = trim(strtolower($_POST['password']));
 		
 		$validar = $this->model->Validar($user,$pass);
 		if($validar['usuario'] == $user && $validar['password'] == $pass){
@@ -25,9 +25,9 @@ class Login extends Controller
 				return;
 			}
 			$_SESSION['katari'] = 'katariSoftware';
-			// $_SESSION['username'] = $validar['usuario'];
-			// $_SESSION['nivel'] = $validar['nivel'];
-			// $_SESSION['id'] = $validar['idlogin'];
+			$_SESSION['username'] = $validar['nombre'];
+			$_SESSION['nivel'] = $validar['nivel'];
+			$_SESSION['idpersonal'] = $validar['idpersonal'];
 			$this->view->mensaje = 'Credenciales correctas';
 			header('location:'.constant('URL').'dashboard');
 		}else{
@@ -41,7 +41,7 @@ class Login extends Controller
 		$_SESSION['katari'] = '';
 		$_SESSION['username'] = '';
 		$_SESSION['nivel'] = '';
-		$_SESSION['id'] = '';
+		$_SESSION['idpersonal'] = '';
 		// $this->model->alterTable();
 		$this->view->Render('login/index');
 	}
