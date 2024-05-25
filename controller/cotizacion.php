@@ -82,7 +82,6 @@ class Cotizacion extends Controller
 			);
 		}
 		echo json_encode($json);
-
 	}
 	// BUSCADORES
 	public function searchNatural(){

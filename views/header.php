@@ -68,9 +68,9 @@
                 </a>
               </li>
               <li>
-                <a href="<?php echo constant('URL')?>">
+                <a href="<?php echo constant('URL')?>pagos">
                   <i class="fas fa-book"></i>
-                  <span class="nav-item">Registros</span>
+                  <span class="nav-item">Registros Pagos</span>
                 </a>
               </li>
               <li>
