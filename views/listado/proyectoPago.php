@@ -88,6 +88,7 @@
         <div class="cell grid-x align-spaced">
             <button class="button success" id="guardar-pago">GUARDAR</button>
             <button class="button secondary">IMPRIMIR BOLETA</button>
+            <button class="button alert" id="cancelar-pago">CANCELAR</button>
         </div>
     </div>
     <!-- REGISTRAR NUEVO PAGO MODAL END *****************************************************-->

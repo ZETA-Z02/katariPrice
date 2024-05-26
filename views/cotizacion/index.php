@@ -77,93 +77,104 @@
 			</div>
 		</div>
 		<!-- DATOS PERSONA JURIDICA END ------------------------------------------------------->
+		<!-- FORMULARIO DE SERVICIO-> POR DEFECTO ESTADISTICA -->
 		<div class="cell large-3">
-			<label for="">Servicio</label>
+			<label for="servicio">Servicio</label>
 			<select name="servicio" id="servicio">
 				<option value="estadistica">estadistica</option>
 				<option value="software">software</option>
 				<option value="redes">redes</option>
 			</select>
+			<input type="text" id="idcalcSoftware" hidden style="display:none;">
 		</div>
 		<div class="cell large-3 contenido" id="contenido-estadistica">
-			<label for="dias">Nivel</label>
-			<select name="nivel" id="nivel">
+			<label for="nivel-estadistica">Nivel</label>
+			<select name="nivel" id="nivel-estadistica">
 				<option value="pregrado">pregrado</option>
 				<option value="postgrado">postgrado</option>
 				<option value="maestria">maestria</option>
 				<option value="doctorado">doctorado</option>
 			</select>
 		</div>
+		<div class="cell large-3 contenido" id="contenido2-redes">
+			<label for="">Trabajo:</label>
+			<select name="redes" id="redes"></select>
+		</div>
 		<div class="cell large-3">
 			<label for="dias">Dias</label>
-			<input type="text">
+			<input type="text" id="dias">
 		</div>
 		<div class="cell large-3">
 			<label for="dias">Precio</label>
-			<input type="text">
+			<input type="text" id="precio">
 		</div>
 		<div class="cell large-3">
 			<label for="dias">Cantidad</label>
-			<input type="text">
+			<input type="text" id="cantidad">
+		</div>
+		<div class="cell large-3">
+			<label for="fecha">Caducidad de la Cotizacion</label>
+			<input type="date" id="fecha">
 		</div>
 		<div class="cell large-6">
 			<label for="dias">Descripcion</label>
 			<textarea name="" id="miTextarea"></textarea>
 		</div>
-		<div class="cell large-3">
-			<label for="dias">Excel</label>
-			<input type="file">
+		<div class="cell large-3 contenido" id="contenido1-redes">
+			<label for="file-upload" class="button margin-top-2">Subir Excel</label>
+			<input type="file" id="file-upload" style="display:none">
 		</div>
 		<button class="button success large-12" id="guardar-todo">Guardar</button>
+		<!-- FORMULARIO DE SERVICIO-> POR DEFECTO ESTADISTICA END-->
 	</div>
 	<!-- FORMULARIO END-->
 	<!-- SOFTWARE FORMULARIO -->
-	<div class="grid-x callout grid-margin-x contenido" id="contenido-software">
-		<div class="cell text-center">
-			<h3>Calculadora de Costos De Software</h3>
+	<div class="grid-x callout grid-margin-x shadow modal-software contenido" id="contenido-software">
+		<div class="cell grid-x align-spaced text-center">
+			<h3>Calculadora de Costos De Software</h3><button class="button alert" id="close-software">Cerrar</button>
 		</div>
 		<span class="cell grid-x text-right">
-			<label for="" class="large-2 lead">Nombre Proyecto : </label>
-			<input class="large-10" type="text">
+			<label for="nombre-proyecto" class="large-2 lead">Nombre Proyecto : </label>
+			<input class="large-10" type="text" id="nombre-proyecto">
 		</span>
 		<div class="cell grid-x text-right">
-			<label for="" class="lead large-2">Descripcion : </label>
+			<label for="miTextareaCalc" class="lead large-2">Descripcion : </label>
 			<span class="large-10">
 				<textarea name="" id="miTextareaCalc"></textarea>
 			</span>
 		</div>
 		<div class="cell grid-x large-up-2 grid-margin-x text-right grid-margin-y">
 			<span class="cell grid-x">
-				<label for="" class="large-4 lead">Dificultad : </label>
+				<label for="dificultad" class="large-4 lead">Dificultad : </label>
 				<select class="large-8" name="" id="dificultad"></select>
 			</span>
 			<span class="cell grid-x">
-				<label for="" class="large-4 lead">Sprints : </label>
-				<input class="large-8" type="text">
+				<label for="sprints" class="large-4 lead">Sprints : </label>
+				<input class="large-8" type="text" id="sprints">
 			</span>
 			<span class="cell grid-x">
-				<label for="" class="large-4 lead">Lenguaje : </label>
+				<label for="lenguaje" class="large-4 lead">Lenguaje : </label>
 				<select class="large-8" name="" id="lenguaje"></select>
 			</span>
 			<span class="cell grid-x">
-				<label for="" class="large-4 lead">Tipo Aplicacion : </label>
+				<label for="aplicacion" class="large-4 lead">Tipo Aplicacion : </label>
 				<select class="large-8" name="" id="aplicacion"></select>
 			</span>
 			<span class="cell grid-x">
-				<label for="" class="large-4 lead">Costo Servicio : </label>
-				<input class="large-8" type="text">
+				<label for="servicio-software" class="large-4 lead">Tipo Servicio : </label>
+				<select class="large-8" name="servicio-software" id="servicio-software"></select>
 			</span>
 			<span class="cell grid-x">
-				<label for="" class="large-4 lead">Duracion : </label>
-				<input class="large-8" type="text">
+				<label for="duracion" class="large-4 lead">Duracion Semanas : </label>
+				<input class="large-8" type="text" placeholder="SEMANAS" id="duracion" disabled>
 			</span>
 			<span class="cell grid-x">
-				<label for="" class="large-4 lead">Costo Por Mantenimiento : </label>
-				<input class="large-8" type="text">
+				<label for="cost-mantenimiento" class="large-4 lead">Costo Por Mantenimiento : </label>
+				<input class="large-8" type="text" id="cost-mantenimiento">
 			</span>
 			<span class="cell grid-x">
-				<label for="" class="large-4 lead">Tiempo Mantenimiento : </label>
-				<input class="large-8" type="text">
+				<label for="tiempo-mantenimiento" class="large-4 lead">T. Mantenimiento Meses: </label>
+				<input class="large-8" type="text" id="tiempo-mantenimiento">
 			</span>
 			<span class="cell grid-x">
 				<label for="" class="large-4 lead">Con Servidor : </label>
@@ -180,12 +191,16 @@
 		<div class="cell grid-x calcular">
 			<div class="cell large-12 callout" id="costo-total">
 				<span class="grid-x align-center grid-margin-x">
-					<h4>Costo Total : </h4>
-					<p class="cell lead callout text-center"> s/. 0.00</p>
+					<h4>Costo Total con IGV: </h4>
+					<p class="cell lead callout text-center" id="mostrar-total"> s/. 0.00</p>
+					<input type="text" id="total-software" hidden style="display:none;">
+					<input type="text" id="subtotal-software" hidden style="display:none;">
+					<input type="text" id="igv-software" hidden style="display:none;">
 				</span>
 			</div>
 			<div class="cell large-12">
-				<button class="button success large-12" id="calcular">Calcular Y Guardar</button>
+				<button class="button success large-12" id="calcular">Calcular</button>
+				<button class="button success large-12" id="guardar-software">GUARDAR</button>
 			</div>
 		</div>
 	</div>
@@ -243,6 +258,8 @@
 
 	</div>
 	<!-- REDES FORMULARIO END-->
+
+<!-- ************************************* MODALES  ********************************************* -->
 	<!-- MODAL NATURAL -->
 	<div class="grid-x callout grid-margin-x modal" id="natural-modal">
 		<div class="cell large-4">
@@ -408,6 +425,7 @@
 		<button class="button alert" id="cancelar-juridica-btn">Cerrar</button>
 	</div>
 	<!-- MODAL FORMULARIO JURIDICO END-->
+<!-- ************************************* MODALES END********************************************* -->
 </div>
 <script src="<?php echo constant('URL') . 'public/js/cotizacion.js' ?>"></script>
 <?php require ('views/footer.php'); ?>

@@ -120,6 +120,8 @@
             <div class="user-info">
               <span><i class="fas fa-user-tie"></i> Bienvenido: <?php echo $_SESSION['username'];?></span>
               <a href="#"><i class="fas fa-cog"></i></a>
+              <!-- ID DEL PERSONAL PUESTO EN EL HEADER PARA QUE DESDE CUALQUIER FORMULARIO SE PUEDA LLAMAR -->
+              <input type="text" id="idpersonal" value="<?php echo $_SESSION['idpersonal']; ?>" hidden style="display:none">
             </div>
           </div>
         </header>

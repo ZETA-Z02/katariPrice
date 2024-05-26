@@ -45,4 +45,17 @@ class Calculadora extends Controller
 		}
 		echo json_encode($json);
 	}
+	public function getServicio(){
+		$data = $this->model->GetServicio();
+		$json = array();
+		while($row = mysqli_fetch_assoc($data)){
+			$json[] = array(
+				"idcosto"=> $row['idcosto'],
+				"idservicio"=> $row['idservicio'],
+				"descripcion"=> $row['descripcion'],
+				"precio"=> $row['precio'],
+			);
+		}
+		echo json_encode($json);
+	}
 }

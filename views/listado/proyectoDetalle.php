@@ -48,29 +48,7 @@
         </div>
     </div>
     <!-- DATOS GENERALES COTIZACION END-->
-
-    <?php if ($this->data['nombres']) { ?><?php
-class LoginModel extends Model{
-
-    function __construct()
-    {
-        parent::__construct();
-    }
-    public function validar($usuario,$password){
-        $sql = "SELECT l.*,p.* FROM login l
-        join personal p
-        on l.idpersonal=p.idpersonal
-        WHERE usuario = '$usuario' AND password = '$password';";
-        $res = $this->conn->ConsultaArray($sql);
-        return $res;
-    }
-    
-    
-}
-
-
-
-?>
+    <?php if ($this->data['nombres']) { ?>
         <!-- DATOS PERSONA NATURAL -->
         <div class="cell">
             <h3>Datos del Cliente Solicitante</h3>

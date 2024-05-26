@@ -1,3 +1,4 @@
+// BOTONES FUNCIONES- REGISTRAR Y GUARDA NATURAL Y JURIDICO-POP UPS--->> NO TOCAR -------------
 $(document).ready(function () {
   // OCULTA LOS MODALES
   $("#natural-modal").hide();
@@ -17,11 +18,14 @@ $(document).ready(function () {
     // Obtiene el valor seleccionado en el select
     var opcionSeleccionada = $(this).val();
     // Muestra el div correspondiente a la opción seleccionada
-    $("#contenido-" + opcionSeleccionada).show();
+    $(
+      "#contenido-" + opcionSeleccionada + ",#contenido1-" + opcionSeleccionada+ ",#contenido2-" + opcionSeleccionada
+    ).show();
   });
   // SELECT PARA QUE APAREZCA EL FORMULARIO END
   // BOTONES NATURAL
   $("#natural-btn").click(function () {
+    $("#idjuridica").val("");
     $("#juridica-modal").hide();
     $("#natural-modal").show();
   });
@@ -31,6 +35,7 @@ $(document).ready(function () {
   // BOTON NATURAL END
   // BOTONES JURIDICO
   $("#juridica-btn").click(function () {
+    $("#idnatural").val("");
     $("#natural-modal").hide();
     $("#juridica-modal").show();
   });
@@ -87,11 +92,6 @@ $(document).ready(function () {
   $("#cancelar-juridica-btn").click(function () {
     $("#juridica-form").hide();
   });
-  //GUARDAR TODO EL FORMULARIO->PRINCIPAL
-  // $("#guardar-todo").click(function(){
-  //   let id = $("#idnatural").val();
-  //   console.log("guardar todo"+id);
-  // });
 
   // LLAMADA A FUNCIONES;
   tablaNatural();
@@ -99,29 +99,29 @@ $(document).ready(function () {
   searchNatural();
   searchJuridica();
 });
-// /////////////---CALCULADORA DE SOFTWARE--//////////////
-$(document).ready(function (){
-  $("#costo-total").hide();
-  getDificultad();
-  getLenguaje();
-  getAplicacion();
-  // CHECKBOX ACTIVATE
-  $("#conservidor").on("change", function() {
-      if (this.checked) {
-          $("#sinservidor").prop("checked", false);
-      }
+// BOTONES FUNCIONES- REGISTRAR Y GUARDA NATURAL Y JURIDICO-POP UPS--->> NO TOCAR END-------------
+// /-/-/-/-/-/-/-/-/-/-/-/-/---CALCULADORA DE MASTER--/-/-/-/-/-/-/-/-/-/-/-/-/-/
+$(document).ready(function () {
+  function attachEventsAndCalculate() {
+    let servicio = $("#servicio").val();
+    $("#dias, #cantidad, #precio").off("change");
+    $("#dias, #cantidad, #precio").val("");
+    if (servicio == "estadistica") {
+      calcularEstadistica();
+    } else if (servicio == "software") {
+      calcularSoftware();
+    } else if (servicio == "redes") {
+      calcularRedes()
+    } else {
+      console.log("ninguna calculadora o ERROR GRAVE");
+    }
+  }
+  $("#servicio").on("change", function () {
+    attachEventsAndCalculate();
   });
-  $("#sinservidor").on("change", function() {
-      if (this.checked) {
-          $("#conservidor").prop("checked", false);
-      }
-  });
-  // CHECKBOX ACTIVATE END
-  $("#calcular").on("click", function(){
-      $("#costo-total").show();
-  });
+  attachEventsAndCalculate();
 });
-// /////////////---CALCULADORA DE SOFTWARE-END-//////////////
+// /-/-/-/-/-/-/-/-/-/-/-/-/---CALCULADORA DE MASTER-/-/-/-/-/-/-/-/-/-/-/-/-/-/
 
 // FUNCIONES
 // -----------------TABLA NATURAL----------------
@@ -176,7 +176,7 @@ function tablaJuridica() {
           `;
       });
       $("#datos-juridica-table").html(html);
-      seleccionarJuridica(response)
+      seleccionarJuridica(response);
     },
     error: function (error) {
       console.log("ERROR EN LA PETICION: " + error);
@@ -252,6 +252,7 @@ function searchJuridica() {
   });
 }
 // **************FUNCION SEARCH JURIDICA*END*************
+// -----------------FUNCION SELECCIONAR NATURAL----------------
 function seleccionarNatural(data) {
   $(document).on("click", ".seleccionar-natural", function () {
     //console.log("clickeado" + data);
@@ -273,7 +274,7 @@ function seleccionarNatural(data) {
           $("#email").val(datos[i]["email"]);
           $("#direccion").val(datos[i]["direccion"]);
           $("#ciudad").val(datos[i]["ciudad"]);
-          
+
           // en ves de esto-> hacer funcion para ocultar y vaciar elementos(inputs)
           $("#datos-juridica").hide();
 
@@ -285,6 +286,8 @@ function seleccionarNatural(data) {
     }
   });
 }
+// -----------------FUNCION SELECCIONAR NATURAL-END---------------
+// -----------------FUNCION SELECCIONAR JURIDICA----------------
 function seleccionarJuridica(data) {
   $(document).on("click", ".seleccionar-juridica", function () {
     //console.log("clickeado" + data);
@@ -317,59 +320,471 @@ function seleccionarJuridica(data) {
     }
   });
 }
+// -----------------FUNCION SELECCIONAR JURIDICA-END---------------
 
-
-// *-*-*-*-*-*-*-FUNCIONES CALCULADORA-*-*-*-*-*-*-
-function getDificultad(){
+// *-*-*-*-*-*-*-FUNCIONES CALCULADORA ESTADISTICA-*-*-*-*-*-*-
+function calcularEstadistica() {
+  getCostosEstadistica();
+  $("#nivel-estadistica,#dias,#cantidad,#precio").on("change", function () {
+    // Obtencion de los datos y verificacion si estan vacios
+    let costo_nivel =
+      $("#nivel-estadistica").val() == ""
+        ? 0
+        : parseFloat($("#nivel-estadistica").val());
+    let dias = $("#dias").val() == "" ? 0 : parseFloat($("#dias").val());
+    let cantidad =
+      $("#cantidad").val() == "" ? 1 : parseFloat($("#cantidad").val());
+    // calculos para sacar precio
+    let total = ((costo_nivel + dias * 10) * cantidad).toFixed(2);
+    console.log(costo_nivel, dias, cantidad, total);
+    $("#precio").val(total);
+  });
+}
+function getCostosEstadistica() {
   $.ajax({
-      type: "GET",
-      url: "http://localhost/katariPrice/calculadora/getDificultad",
+    type: "GET",
+    url: "http://localhost/katariPrice/cotizacion/getCostosEstadistica",
+    success: function (response) {
+      let data = JSON.parse(response);
+      html = "";
+      data.forEach((element) => {
+        html += `<option value="${element.precio}" data-id="${element.idcosto}">${element.descripcion}</option>`;
+      });
+      $("#nivel-estadistica").html(html);
+    },
+    error: function (error) {
+      console.log("ERROR EN LA PETICION: " + error);
+    },
+  });
+}
+// *-*-*-*-*-*-*-FUNCIONES CALCULADORA ESTADISTICA END-*-*-*-*-*-*-
+
+// *-*-*-*-*-*-*-FUNCIONES CALCULADORA DE SOFTWARE-*-*-*-*-*-*-
+function calcularSoftware() {
+  $("#calcular").show();
+  $("#guardar-software").hide();
+  $("#costo-total").hide();
+  getDificultad();
+  getLenguaje();
+  getAplicacion();
+  getServicio();
+  // CHECKBOX ACTIVATE
+  $("#conservidor").on("change", function () {
+    if (this.checked) {
+      $("#sinservidor").prop("checked", false);
+    }
+  });
+  $("#sinservidor").on("change", function () {
+    if (this.checked) {
+      $("#conservidor").prop("checked", false);
+    }
+  });
+  // CHECKBOX ACTIVATE END
+  // SPRINTS Y DURACION
+  $("#sprints").on("change", function () {
+    let sprints = $("#sprints").val();
+    $("#duracion").val(sprints * 3);
+  });
+  //cerrar
+  $("#close-software").on("click", function () {
+    $("#contenido-software").hide();
+  });
+  // calcular
+  $("#calcular").on("click", function () {
+    // acciones al presionar CALCULAR
+    $("#costo-total").show();
+    $("#calcular").hide();
+    $("#guardar-software").show();
+    // acciones al presionar CALCULAR end
+    // OBTENER TODOS LOS DATOS PARA EL CALCULO
+    let dificultad = parseFloat($("#dificultad").val());
+    let lenguaje = parseFloat($("#lenguaje").val());
+    let aplicacion = parseFloat($("#aplicacion").val());
+    let tipoServicio = parseFloat($("#servicio-software").val());
+    let costMantenimiento =
+      $("#cost-mantenimiento").val() == ""
+        ? 0
+        : parseFloat($("#cost-mantenimiento").val());
+    let tiempoMantenimiento =
+      $("#tiempo-mantenimiento").val() == ""
+        ? 0
+        : parseFloat($("#tiempo-mantenimiento").val());
+    let sprints = $("#sprints").val() == "" ? 1 : parseInt($("#sprints").val());
+    let servidorPrecio = $("#conservidor").prop("checked") == false ? 0 : 300;
+    // OBTENER TODOS LOS DATOS PARA EL CALCULO END
+    // CALCULO DE PRECIO---------------------------------------------------------------------------------***************************
+    let costoXsprint = sprints * 50;
+    let precioDificultad =
+      (tipoServicio +
+        aplicacion +
+        lenguaje +
+        costMantenimiento * tiempoMantenimiento +
+        servidorPrecio) *
+      dificultad;
+    let subtotal =
+      precioDificultad +
+      (tipoServicio +
+        aplicacion +
+        lenguaje +
+        costMantenimiento * tiempoMantenimiento +
+        costoXsprint +
+        servidorPrecio);
+    let igv = subtotal * 0.18;
+    let total = subtotal + igv;
+    // INSERCION DEL TOTAL E IGV A LOS INPUTS PARA DESPUES INSERTAR A LA BASE DE DATOS
+    $("#mostrar-total").html(`s/. ${total}`);
+    $("#total-software").val(total);
+    $("#subtotal-software").val(subtotal);
+    $("#igv-software").val(igv);
+    $("#precio").val(total);
+    // CALCULO DE PRECIO END------------------------------------------------------------------------------**********************
+    guardarSoftware();
+  });
+}
+function guardarSoftware() {
+  // OBTENDRA TODOS LOS VALORES DE LOS INPUTS DE CALCULADORA DE SOFTWARE Y GUARDARA
+  // EN LA BASE DE DATOS
+  $("#guardar-software").on("click", function () {
+    let nombre = $("#nombre-proyecto").val();
+    let descripcion = $("#miTextareaCalc").val();
+    let selectedDificultad = $("#dificultad").find("option:selected"); // selector
+    let iddificultad = selectedDificultad.data("id");
+    let selectedLenguaje = $("#lenguaje").find("option:selected"); // selector
+    let idlenguaje = selectedLenguaje.data("id");
+    let selectedAplicacion = $("#aplicacion").find("option:selected"); // selector
+    let idaplicacion = selectedAplicacion.data("id");
+    let costoservicio = $("#servicio-software").val();
+    let duracionsemanas = $("#duracion").val() == "" ? 0 : $("#sprints").val();
+    let costomantenimiento =
+      $("#cost-mantenimiento").val() == "" ? 0 : $("#cost-mantenimiento").val();
+    let tiempomantenimiento =
+      $("#tiempo-mantenimiento").val() == ""
+        ? "No Definido"
+        : `${$("#tiempo-mantenimiento").val()} meses`;
+    let opciones =
+      $("#conservidor").prop("checked") == false
+        ? "sin servidor"
+        : "con servidor";
+    let subtotal = $("#subtotal-software").val();
+    let igv = $("#igv-software").val();
+    let total = $("#total-software").val();
+    let idpersonal = $("#idpersonal").val();
+    $.ajax({
+      type: "POST",
+      url: "http://localhost/katariPrice/cotizacion/calcSoftware",
+      data: {
+        nombre,
+        descripcion,
+        iddificultad,
+        idlenguaje,
+        idaplicacion,
+        costoservicio,
+        duracionsemanas,
+        costomantenimiento,
+        tiempomantenimiento,
+        opciones,
+        subtotal,
+        igv,
+        total,
+        idpersonal,
+      },
       success: function (response) {
-          //console.log(response);
-          let data = JSON.parse(response);
-          html = "";
-          data.forEach(element => {
-              html += `<option value="${element.factor}">${element.iddificultad}</option>`
-          });
-          $("#dificultad").html(html);
+        if (response) {
+          $("#contenido-software").hide();
+          $("#idcalcSoftware").val(response);
+        }
       },
       error: function (error) {
-          console.log("ERROR EN LA PETICION: " + error);
+        console.log("ERROR EN LA PETICION: " + error);
       },
+    });
   });
 }
-function getLenguaje(){
+function getDificultad() {
   $.ajax({
-      type: "GET",
-      url: "http://localhost/katariPrice/calculadora/getLenguaje",
-      success: function (response) {
-          //console.log(response);
-          let data = JSON.parse(response);
-          html = "";
-          data.forEach(element => {
-              html += `<option value="${element.precio}">${element.lenguaje}</option>`
-          });
-          $("#lenguaje").html(html);
-      }, error: function(error){
-
-      },
+    type: "GET",
+    url: "http://localhost/katariPrice/calculadora/getDificultad",
+    success: function (response) {
+      //console.log(response);
+      let data = JSON.parse(response);
+      html = "";
+      data.forEach((element) => {
+        html += `<option value="${element.factor}" data-id="${element.iddificultad}">${element.iddificultad}</option>`;
+      });
+      $("#dificultad").html(html);
+    },
+    error: function (error) {
+      console.log("ERROR EN LA PETICION: " + error);
+    },
   });
 }
-function getAplicacion(){
+function getLenguaje() {
   $.ajax({
-      type: "GET",
-      url: "http://localhost/katariPrice/calculadora/getAplicacion",
-      success: function (response) {
-          //console.log(response);
-          let data = JSON.parse(response);
-          html = "";
-          data.forEach(element => {
-              html += `<option value="${element.precio}">${element.aplicacion}</option>`
-          });
-          $("#aplicacion").html(html);
-      }, error: function(error){
-
-      },
+    type: "GET",
+    url: "http://localhost/katariPrice/calculadora/getLenguaje",
+    success: function (response) {
+      //console.log(response);
+      let data = JSON.parse(response);
+      html = "";
+      data.forEach((element) => {
+        html += `<option value="${element.precio}" data-id="${element.idlenguaje}">${element.lenguaje}</option>`;
+      });
+      $("#lenguaje").html(html);
+    },
+    error: function (error) {
+      console.log("ERROR EN LA PETICION: " + error);
+    },
   });
 }
-// *-*-*-*-*-*-*-FUNCIONES CALCULADORA-END-*-*-*-*-*-*-
+function getAplicacion() {
+  $.ajax({
+    type: "GET",
+    url: "http://localhost/katariPrice/calculadora/getAplicacion",
+    success: function (response) {
+      //console.log(response);
+      let data = JSON.parse(response);
+      html = "";
+      data.forEach((element) => {
+        html += `<option value="${element.precio}" data-id="${element.idaplicacion}">${element.aplicacion}</option>`;
+      });
+      $("#aplicacion").html(html);
+    },
+    error: function (error) {},
+  });
+}
+function getServicio() {
+  $.ajax({
+    type: "GET",
+    url: "http://localhost/katariPrice/calculadora/getServicio",
+    success: function (response) {
+      let data = JSON.parse(response);
+      html = "";
+      data.forEach((element) => {
+        html += `<option value="${element.precio}" data-id="${element.idcosto}">${element.descripcion}</option>`;
+      });
+      $("#servicio-software").html(html);
+    },
+    error: function (error) {
+      console.log("ERROR EN LA PETICION: " + error);
+    },
+  });
+}
+// *-*-*-*-*-*-*-FUNCIONES CALCULADORA DE SOFTWARE -END-*-*-*-*-*-*-
+
+// *-*-*-*-*-*-*-FUNCIONES CALCULADORA DE REDES -*-*-*-*-*-*-
+function calcularRedes(){
+  getRedesServicios();
+  $("#redes,#dias,#cantidad,#precio").on("change", function () {
+    let redes = parseFloat($("#redes").val());
+    let dias = $("#dias").val() == "" ? 0 : parseFloat($("#dias").val());
+    let cantidad =
+      $("#cantidad").val() == "" ? 1 : parseFloat($("#cantidad").val());
+    let total = (redes + (dias * 25) + cantidad).toFixed(2);
+    $("#precio").val(total);
+  });
+}
+function getRedesServicios() {
+  $.ajax({
+    type: "GET",
+    url: "http://localhost/katariPrice/cotizacion/getRedes",
+    success: function (response) {
+      let data = JSON.parse(response);
+      html = "";
+      data.forEach((element) => {
+        html += `<option value="${element.precio}" data-id="${element.idcosto}">${element.descripcion}</option>`;
+      });
+      $("#redes").html(html);
+    },
+    error: function (error) {
+      console.log("ERROR EN LA PETICION: " + error);
+    },
+  });
+}
+// *-*-*-*-*-*-*-FUNCIONES CALCULADORA DE REDES -END-*-*-*-*-*-*-
+
+// *-*-*-*-*-*-*-GUARDAR TODO EL FORMULARIO->PRINCIPAL
+$(document).ready(function () {
+  $("#guardar-todo").click(function () {
+    let type_form = $("#servicio").val();
+    if (type_form == "estadistica") {
+      postEstadistica();
+    } else if (type_form == "software") {
+      postSoftware();
+    } else if (type_form == "redes") {
+      postRedes();
+    } else {
+      console.log("ERROR EN SELECCIONAR TIPO DE SERVICIO");
+    }
+  });
+});
+//CREAR FUNCIONES PARA GUARDAR CADA TIPO DE SERVICIO
+function postEstadistica() {
+  var id = "";
+  if ($("#idnatural").val() !== "") {
+    var id = $("#idnatural").val();
+    var tipoCliente = "natural";
+  } else if ($("#idjuridica").val() !== "") {
+    var id = $("#idjuridica").val();
+    var tipoCliente = "juridica";
+  } else {
+    alert("Seleccione un tipo de persona");
+    console.log("ERROR EN SELECCIONAR TIPO DE PERSONA->MOSTRAR MODAL MENSAJE");
+    return;
+  }
+  let servicio = "100";
+  let selectedNivel = $("#nivel-estadistica").find("option:selected"); // selector
+  let costo = selectedNivel.data("id");
+  let idpersonal = $("#idpersonal").val();
+  let dias = $("#dias").val();
+  let cantidad = $("#cantidad").val();
+  let precio = $("#precio").val();
+  let fecha = $("#fecha").val();
+  let descripcion = $("#miTextarea").val();
+  $.ajax({
+    type: "POST",
+    url: "http://localhost/katariPrice/cotizacion/postEstadistica",
+    data: {
+      id,
+      servicio,
+      costo,
+      idpersonal,
+      dias,
+      precio,
+      cantidad,
+      fecha,
+      descripcion,
+      tipoCliente,
+    },
+    success: function (response) {
+      // hacer modal de confirmacion y que se limpie los datos de la cotizacion
+      console.log(response);
+    },
+    error: function (error) {
+      console.log("ERROR EN LA PETICION ESTADISTICA: " + error);
+    },
+  });
+}
+function postSoftware() {
+  var id = "";
+  if ($("#idnatural").val() !== "") {
+    var id = $("#idnatural").val();
+    var tipoCliente = "natural";
+  } else if ($("#idjuridica").val() !== "") {
+    var id = $("#idjuridica").val();
+    var tipoCliente = "juridica";
+  } else {
+    alert("Seleccione un tipo de persona");
+    //console.log("ERROR EN SELECCIONAR TIPO DE PERSONA->MOSTRAR MODAL MENSAJE");
+    return;
+  }
+  // Id de la ultima cotizacion insertada-> NO TOCAR--?>>> HACER UNA VALIDACION SI ESTA VACIO ESTE CAMPO
+  let idcalcSoftware = $("#idcalcSoftware").val();
+  let servicio = "200";
+  let selectedCosto = $("#servicio-software").find("option:selected"); // selector
+  let idcosto = selectedCosto.data("id");
+  let idpersonal = $("#idpersonal").val();
+  let dias = $("#dias").val();
+  let cantidad = $("#cantidad").val();
+  let precio = $("#precio").val();
+  let fecha = $("#fecha").val();
+  let descripcion = $("#miTextarea").val();
+  if(idcalcSoftware == ""){
+    alert("Por favor ingrese datos en los calculos de la cotizacion");
+    $("#contenido-software").show();
+    return;
+  }
+  $.ajax({
+    type: "POST",
+    url: "http://localhost/katariPrice/cotizacion/postSoftware",
+    data: {
+      id,
+      servicio,
+      idcosto,
+      idpersonal,
+      dias,
+      precio,
+      cantidad,
+      fecha,
+      descripcion,
+      idcalcSoftware,
+      tipoCliente,
+    },
+    success: function (response) {
+      // hacer modal de confirmacion y que se limpie los datos de la cotizacion
+      console.log(response);
+    },
+    error: function (error) {
+      console.log("ERROR EN LA PETICION SOFTWARE: " + error);
+    },
+  });
+
+}
+function postRedes() {
+  var id = "";
+  if ($("#idnatural").val() !== "") {
+    var id = $("#idnatural").val();
+    var tipoCliente = "natural";
+    var nombre = $("#nombres").val();
+  } else if ($("#idjuridica").val() !== "") {
+    var id = $("#idjuridica").val();
+    var tipoCliente = "juridica";
+    var nombre = $("#razonsocial").val();
+  } else {
+    alert("Seleccione un tipo de persona");
+    console.log("ERROR EN SELECCIONAR TIPO DE PERSONA->MOSTRAR MODAL MENSAJE");
+    return;
+  }
+  let servicio = "300";
+  let selectedRed = $("#redes").find("option:selected");
+  let costo = selectedRed.data("id");
+  let idpersonal = $("#idpersonal").val();
+  let dias = $("#dias").val();
+  let cantidad = $("#cantidad").val();
+  let precio = $("#precio").val();
+  let fecha = $("#fecha").val();
+  let descripcion = $("#miTextarea").val();
+  let fileInput = document.getElementById("file-upload");
+  let file = fileInput.files[0];  // Obtén el primer archivo seleccionado
+  // Crear un objeto FormData y agregar todos los datos del formulario
+  let formData = new FormData();
+  formData.append("nombre", nombre); 
+  formData.append("id", id);
+  formData.append("servicio", servicio);
+  formData.append("costo", costo);
+  formData.append("idpersonal", idpersonal);
+  formData.append("dias", dias);
+  formData.append("cantidad", cantidad);
+  formData.append("precio", precio);
+  formData.append("fecha", fecha);
+  formData.append("descripcion", descripcion);
+  formData.append("tipoCliente", tipoCliente);
+  formData.append("excel", file); 
+  $.ajax({
+    type: "POST",
+    url: "http://localhost/katariPrice/cotizacion/postRedes",
+    data: formData,
+    processData: false,  // No procesar los datos, es decir, enviar tal cual
+    contentType: false,  // No establecer ningún tipo de contenido
+    success: function (response) {
+      // hacer modal de confirmacion y que se limpie los datos de la cotizacion
+      console.log(response);
+    },
+    error: function (error) {
+      console.log("ERROR EN LA PETICION REDES: " + error);
+    },
+  });
+}
+// *-*-*-*-*-*-*-GUARDAR TODO EL FORMULARIO->PRINCIPAL END
+
+// -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+// Reemplaza caracteres no numericos a flotantes-> HACE QUE TODOS LOS INPUTS,NO SE PERMITAN CARACTERES
+$(
+  "#muc,#vet,#remBasica, #remReunificada, #desupremo, #otros, #totalRemu,#ley19990, #ley20530, #afp, #ipss, #fonavi"
+).on("input", function () {
+  $(this).val(
+    $(this)
+      .val()
+      .replace(/[^0-9.]/g, "")
+  );
+});
+// -*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*

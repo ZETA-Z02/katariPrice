@@ -5,7 +5,7 @@
   resize: none; /* Evita que el usuario pueda redimensionar */
 }
 #miTextareaCalc {
-  height: 120px; /* Altura deseada */
+  height: 100px; /* Altura deseada */
   width: 100%; /* Ancho completo */
   resize: none; /* Evita que el usuario pueda redimensionar */
 }
@@ -35,5 +35,11 @@
   width: 70%;
   position: fixed;
   top: 20%;
+  right: 9rem;
+}
+.modal-software {
+  width: 70%;
+  position: fixed;
+  top: 1rem;
   right: 9rem;
 }

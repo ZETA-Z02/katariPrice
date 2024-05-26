@@ -20,6 +20,11 @@ class CalculadoraModel extends Model{
         $res = $this->conn->ConsultaCon($sql);
         return $res;
     }
+    public function GetServicio(){
+        $sql = "SELECT * FROM costos WHERE idservicio = 200;";
+        $res = $this->conn->ConsultaCon($sql);
+        return $res;
+    }
     
 }
 

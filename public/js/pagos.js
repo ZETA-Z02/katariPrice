@@ -3,11 +3,12 @@ $(document).ready(function(){
     $("#registrar-pago").click(function(){
         $("#pago-modal").show();
     });
-    $("#guardar-pago").click(function(){
+    $("#guardar-pago, #cancelar-pago").click(function(){
         $("#pago-modal").hide();
     });
 });
 pagoDetalles();
+// DETALLES DE PAGOS DE UN PROYECTO EN ESPECIFICO
 function pagoDetalles(){
     let idpago = $("#idpago").val();
     console.log(idpago);
@@ -37,3 +38,4 @@ function pagoDetalles(){
         }
     });
 }
+// DETALLES DE PAGOS DE UN PROYECTO EN ESPECIFICO END

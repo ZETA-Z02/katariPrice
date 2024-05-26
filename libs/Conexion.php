@@ -1,7 +1,7 @@
 <?php
 class Conexion
 {
-  private $conn;
+  public $conn;
 
   function __construct()
   {
@@ -24,13 +24,11 @@ class Conexion
   public function ConsultaSin($sql)
   {
     # Sirve para: INSERT, UPDATE, DELETE
-    echo $sql;
-
+    //echo $sql;
     if (!$this->conn->query($sql)) {
       echo "Error. " . mysqli_error($this->conn);
       exit();
     }
-
     return true;
     mysqli_close($this->conn);
   }
@@ -38,13 +36,11 @@ class Conexion
   public function ConsultaCon($sql)
   {
     # Sirve para: SELECT
-
     if (!$result = $this->conn->query($sql)) {
       echo "Error: " . mysqli_error($this->conn);
       return false;
       exit();
     }
-
     return $result;
     mysqli_close($this->conn);
   }
@@ -53,12 +49,10 @@ class Conexion
   {
     # Sirve para: SELECT convertido en array
     #echo $sql;
-
     if (!$result = $this->conn->query($sql)) {
       echo "Error. " . mysqli_error($this->conn);
       return false;
     }
-
     $data = $result->fetch_array(MYSQLI_ASSOC);
     return $data;
     mysqli_close($this->conn);
