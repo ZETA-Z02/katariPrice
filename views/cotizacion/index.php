@@ -1,6 +1,6 @@
 <?php require ('views/header.php'); ?>
 <link rel="stylesheet" href="<?php echo constant('URL') . 'public/css/cotizacion.css' ?>">
-<div class="grid-container margin-top-1">
+<div class="grid-container full margin-top-1">
 	<!-- BOTONES NATURAL Y JURIDICA-POP UPS -->
 	<div class="grid-x large-up-2 text-center">
 		<div class="cell">
