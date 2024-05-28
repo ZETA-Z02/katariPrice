@@ -1,13 +1,10 @@
 <?php
-
 class Listado extends Controller
 {
-
 	function __construct()
 	{
 		parent::__construct();
 	}
-
 	function render()
 	{
 		$this->view->Render('listado/index');
@@ -23,6 +20,10 @@ class Listado extends Controller
 	function pagos()
 	{
 		$this->view->Render('listado/proyectoPago');
+	}
+	function avances()
+	{
+		$this->view->Render('listado/proyectoAvances');
 	}
 	// LISTAR COTIZACIONES ***************************************
 	public function listarCotizacionesNatural()
@@ -178,6 +179,8 @@ class Listado extends Controller
 	{
 		$id = $nparam[0];
 		$data = $this->model->CotizacionNaturalDetalle($id);
+		$data2 = $this->model->verificarCotizacion($data['idcotizacion']);
+		$this->view->data2 = $data2;
 		$this->view->data = $data;
 		$this->cotizacion();
 	}
@@ -185,6 +188,8 @@ class Listado extends Controller
 	{
 		$id = $nparam[0];
 		$data = $this->model->CotizacionJuridicaDetalle($id);
+		$data2 = $this->model->verificarCotizacion($data['idcotizacion']);
+		$this->view->data2 = $data2;
 		$this->view->data = $data;
 		$this->cotizacion();
 	}
@@ -206,13 +211,15 @@ class Listado extends Controller
 	}
 	// DETALLES COTIZACIONES END------------------------------------
 	// ***************************PAGOS PROYECTO********************
-	public function proyectoPagos($nparam=null){
+	public function proyectoPagos($nparam = null)
+	{
 		$id = $nparam[0];
 		$data = $this->model->ProyectoPagos($id);
 		$this->view->data = $data;
 		$this->pagos();
 	}
-	public function pagoDetalle(){
+	public function pagoDetalle()
+	{
 		$id = $_POST['idpago'];
 		$data = $this->model->PagoDetalle($id);
 		$json = array();
@@ -225,6 +232,85 @@ class Listado extends Controller
 			);
 		}
 		echo json_encode($json);
-    }
+	}
 	// ***************************PAGOS PROYECTO*END*******************
+
+	// -*-*-*-*-*-*-*-*-*PROYECTO AVANCES-*-*-*-*-*-*
+	public function proyectoAvances($nparam = null)
+	{
+		$id = $nparam[0];
+		//$data = $this->model->ProyectoPagos($id);
+		//$this->view->data = $data;
+		$this->avances();
+	}
+	// -*-*-*-*-*-*-*-*-*PROYECTO AVANCES-END*-*-*-*-*-*
+	// CAMBIAR ESTADO DE COTIZACIONES */-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+	public function cotizacionEstado()
+	{
+		$id = $_POST['id'];
+		$estado = $_POST['estado'];
+		if ($this->model->CotizacionEstado($id, $estado)) {
+			echo "cambio exitoso";
+		} else {
+			echo "ERROR EN LA ACTUALIZACION";
+		}
+	}
+	// CAMBIAR ESTADO DE COTIZACIONES END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+	// PASAR A PROYECTO UNA COTIZACION */-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+	public function postProyecto()
+	{
+		$nomProyecto = $_POST['nomProyecto'];
+		$idCliente = $_POST['id'];
+		$estado = "proceso";
+		$idservicio = $_POST['idservicio'];
+		$actividades = $_POST['totalActividades'];
+		$descripcion = $_POST['descripcion'];
+		$entrega = $_POST['fechaEntrega'];
+		$total = $_POST['total'];
+		$tipoCliente = $_POST['tipoCliente'];
+		$idpersonal = $_POST['idpersonal'];
+		$idcotizacion = $_POST['idcotizacion'];
+		// para la tabla pagos
+		$monto = $_POST['monto'];
+		$saldo = floatval($total) - floatval($monto);
+		$igv = floatval($total) * 0.18;
+		$pendiente = floatval($total) - floatval($monto);
+		if ($tipoCliente == 'natural') {
+			if ($this->model->PostProyectoNatural($nomProyecto, $idCliente, $estado, $idservicio, $actividades, $descripcion, $pendiente, $total, $entrega, $idpersonal, $idcotizacion, $monto, $saldo, $igv)) {
+				echo "insercion natural con exito-modal de exito";
+			} else {
+				echo "ERROR EN LA INSERCION";
+			}
+		} else if ($tipoCliente == 'juridica') {
+			if ($this->model->PostProyectoJuridica($nomProyecto, $idCliente, $estado, $idservicio, $actividades, $descripcion, $pendiente, $total, $entrega, $idpersonal, $idcotizacion, $monto, $saldo, $igv)) {
+				echo "insercion juridica con exito-modal de exito";
+			} else {
+				echo "ERROR EN LA INSERCION";
+			}
+		}
+	}
+	// PASAR A PROYECTO UNA COTIZACION END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+	// CAMBIAR ESTADO DE PROYECTOS */-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+	public function proyectoEstado()
+	{
+		$id = $_POST['id'];
+		$estado = $_POST['estado'];
+		if ($this->model->ProyectoEstado($id, $estado)) {
+			echo "cambio exitoso";
+		} else {
+			echo "ERROR EN LA ACTUALIZACION";
+		}
+	}
+	public function proyectoActualizar(){
+		$id = $_POST['id'];
+		$actividades = $_POST['totalactividades'];
+		$fecha = $_POST['feEntrega'];
+		$descripcion = $_POST['descripcion'];
+		if ($this->model->ProyectoActualizar($id, $actividades, $fecha, $descripcion)) {
+			echo "cambio exitoso";
+		} else {
+			echo "ERROR EN LA ACTUALIZACION";
+		}
+	}
+	// CAMBIAR ESTADO DE PROYECTOS END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
 }

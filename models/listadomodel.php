@@ -1,56 +1,66 @@
 <?php
-class ListadoModel extends Model{
+class ListadoModel extends Model
+{
     function __construct()
     {
         parent::__construct();
     }
     // LISTAS COTIZACIONES
-    public function ListarCotizacionesNatural(){
+    public function ListarCotizacionesNatural()
+    {
         $sql = "SELECT * from cotizacion_natural;";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
-    public function ListarCotizacionesJuridica(){
+    public function ListarCotizacionesJuridica()
+    {
         $sql = "SELECT * FROM cotizacion_juridica;";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
-    public function ListarCotizacionesEstadoNatural($estado){
+    public function ListarCotizacionesEstadoNatural($estado)
+    {
         $sql = "SELECT * from cotizacion_natural WHERE estado = '$estado';";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
-    public function ListarCotizacionesEstadoJuridica($estado){
+    public function ListarCotizacionesEstadoJuridica($estado)
+    {
         $sql = "SELECT * FROM cotizacion_juridica where estado='$estado';";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
     // LISTAS COTIZACIONES END
     // LISTAS PROYECTOS 
-    public function ListarProyectosNatural(){
+    public function ListarProyectosNatural()
+    {
         $sql = "SELECT * FROM proyectos_natural;";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
-    public function ListarProyectosJuridica(){
+    public function ListarProyectosJuridica()
+    {
         $sql = "SELECT * FROM proyectos_juridica;";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
-    public function ListarProyectosNaturalEstado($estado){
+    public function ListarProyectosNaturalEstado($estado)
+    {
         $sql = "SELECT * FROM proyectos_natural WHERE estado = '$estado';";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
-    public function ListarProyectosJuridicaEstado($estado){
+    public function ListarProyectosJuridicaEstado($estado)
+    {
         $sql = "SELECT * FROM proyectos_juridica WHERE estado = '$estado';";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
     // LISTAS PROYECTOS END
     // LISTAR COTIZACIONES DETALLES -----
-    public function CotizacionNaturalDetalle($id){
-        $sql = "SELECT n.*,concat(p.nombre,' ',p.apellidos) AS personal,c.precio AS costo,c.descripcion AS tipo_costo 
+    public function CotizacionNaturalDetalle($id)
+    {
+        $sql = "SELECT n.*,concat(p.nombre,' ',p.apellidos) AS personal,c.precio AS costo,c.descripcion AS tipo_costo, c.idservicio
         FROM cotizacion_natural n
         JOIN personal p
         ON p.idpersonal = n.idpersonal
@@ -60,8 +70,9 @@ class ListadoModel extends Model{
         $data = $this->conn->ConsultaArray($sql);
         return $data;
     }
-    public function CotizacionJuridicaDetalle($id){
-        $sql = "SELECT n.*,concat(p.nombre,' ',p.apellidos) AS personal,c.precio AS costo,c.descripcion AS tipo_costo 
+    public function CotizacionJuridicaDetalle($id)
+    {
+        $sql = "SELECT n.*,concat(p.nombre,' ',p.apellidos) AS personal,c.precio AS costo,c.descripcion AS tipo_costo, c.idservicio
         FROM cotizacion_juridica n
         JOIN personal p
         ON p.idpersonal = n.idpersonal
@@ -71,9 +82,16 @@ class ListadoModel extends Model{
         $data = $this->conn->ConsultaArray($sql);
         return $data;
     }
+    public function verificarCotizacion($id)
+    {
+        $sql = "select count(*) as total from proyectos where idcotizacion = '$id';";
+        $data = $this->conn->ConsultaArray($sql);
+        return $data;
+    }
     // LISTAR COTIZACIONES DETALLES END
     // LISTAR PROYECTOS DETALLES -----
-    public function ProyectoNaturalDetalle($id){
+    public function ProyectoNaturalDetalle($id)
+    {
         $sql = "SELECT n.*,concat(p.nombre,' ',p.apellidos) AS personal
         FROM proyectos_natural n
         JOIN personal p
@@ -82,7 +100,8 @@ class ListadoModel extends Model{
         $data = $this->conn->ConsultaArray($sql);
         return $data;
     }
-    public function ProyectoJuridicaDetalle($id){
+    public function ProyectoJuridicaDetalle($id)
+    {
         $sql = "SELECT j.*,concat(p.nombre,' ',p.apellidos) AS personal
         FROM proyectos_juridica j
         JOIN personal p
@@ -93,7 +112,8 @@ class ListadoModel extends Model{
     }
     // LISTAR PROYECTOS DETALLES END
     // ****************PAGOS PROYECTO*************************
-    public function ProyectoPagos($id){
+    public function ProyectoPagos($id)
+    {
         $sql = "SELECT pa.*, pro.idnatural, pro.idjuridica, pro.nomproyecto,pro.estado,
         COALESCE(concat(n.nombre,' ',n.apellidos), j.razonsocial) AS nombres,
         COALESCE(n.telefono, j.telefono) AS telefono,
@@ -106,13 +126,85 @@ class ListadoModel extends Model{
         $data = $this->conn->ConsultaArray($sql);
         return $data;
     }
-    public function PagoDetalle($id){
+    public function PagoDetalle($id)
+    {
         $sql = "SELECT * FROM pago_detalles WHERE idpago='$id';";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
-
     // ****************PAGOS PROYECTO END**************************************
+
+    // CAMBIAR ESTADO DE COTIZACIONES */-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+    public function CotizacionEstado($id, $estado)
+    {
+        $sql = "UPDATE `cotizaciones` SET `estado` = '$estado' WHERE `idcotizacion` = '$id';";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
+    }
+    // CAMBIAR ESTADO DE COTIZACIONES END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+    // GUARDAR PAGO DETALLE
+    public function PostPago($idpago, $monto, $concepto)
+    {
+        $sql = "INSERT INTO `pago_detalles` (`idpago`, `monto`, `concepto`) VALUES ('$idpago', '$monto', '$concepto');";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
+    }
+    // PASAR A PROYECTO UNA COTIZACION */-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+    public function PostProyectoNatural($proyecto, $id, $estado, $servicio, $actividades, $descripcion, $pendiente, $total, $feEntrega, $idpersonal, $idcotizacion, $monto, $saldo, $igv)
+    {
+        $this->conn->conn->begin_transaction();
+        try {
+            $sql = "INSERT INTO `proyectos` (`nomproyecto`, `idnatural`, `estado`, `idservicio`, `totalactividades`, `descripcion`, `pendientepago`, `total`, `feEntrega`, `idpersonal`, `idcotizacion`) VALUES ('$proyecto', '$id', '$estado', '$servicio', '$actividades', '$descripcion', '$pendiente', '$total', '$feEntrega', '$idpersonal', '$idcotizacion');";
+            $res = $this->conn->ConsultaSin($sql);
+            $resEstado = $this->CotizacionEstado($idcotizacion, "proyecto");
+            $idproyecto = $this->conn->conn->insert_id;
+            $sqlPago = "INSERT INTO `katari`.`pagos` (`idproyecto`, `nomproyecto`, `idnatural`, `monto`, `saldo`, `igv`, `total`) VALUES ('$idproyecto', '$proyecto', '$id', '$monto', '$saldo', '$igv', '$total');";
+            $res1 = $this->conn->ConsultaSin($sqlPago);
+            $idpago = $this->conn->conn->insert_id;
+            $res2 = $this->PostPago($idpago, $monto, "Primer Pago");
+            $this->conn->conn->commit();
+            return $res2;
+        } catch (Exception $e) {
+            $this->conn->conn->rollback();
+            echo "Error: " . $e->getMessage();
+        }
+        $this->conn->conn->close();
+    }
+    public function PostProyectoJuridica($proyecto, $id, $estado, $servicio, $actividades, $descripcion, $pendiente, $total, $feEntrega, $idpersonal, $idcotizacion, $monto, $saldo, $igv)
+    {
+        $this->conn->conn->begin_transaction();
+        try {
+            $sql = "INSERT INTO `proyectos` (`nomproyecto`, `idjuridica`, `estado`, `idservicio`, `totalactividades`, `descripcion`, `pendientepago`, `total`, `feEntrega`, `idpersonal`, `idcotizacion`) VALUES ('$proyecto', '$id', '$estado', '$servicio', '$actividades', '$descripcion', '$pendiente', '$total', '$feEntrega', '$idpersonal', '$idcotizacion');";
+            $res = $this->conn->ConsultaSin($sql);
+            $resEstado = $this->CotizacionEstado($idcotizacion, "proyecto");
+            $idproyecto = $this->conn->conn->insert_id;
+            $sqlPago = "INSERT INTO `katari`.`pagos` (`idproyecto`, `nomproyecto`, `idjuridica`, `monto`, `saldo`, `igv`, `total`) VALUES ('$idproyecto', '$proyecto', '$id', '$monto', '$saldo', '$igv', '$total');";
+            $res1 = $this->conn->ConsultaSin($sqlPago);
+            $idpago = $this->conn->conn->insert_id;
+            $res2 = $this->PostPago($idpago, $monto, "Primer Pago");
+            $this->conn->conn->commit();
+            return $res2;
+        } catch (Exception $e) {
+            $this->conn->conn->rollback();
+            echo "Error: " . $e->getMessage();
+        }
+        $this->conn->conn->close();
+    }
+    // PASAR A PROYECTO UNA COTIZACION END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+    // CAMBIAR ESTADO DE PROYECTOS */-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+    public function ProyectoEstado($id, $estado)
+    {
+        $sql = "UPDATE `proyectos` SET `estado` = '$estado' WHERE `idproyecto` = '$id';";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
+    }
+    public function ProyectoActualizar($id, $actividades, $fecha, $descripcion)
+    {
+        $sql = "UPDATE `proyectos` SET `totalactividades` = '$actividades', `feEntrega` = '$fecha', `descripcion` = '$descripcion' WHERE `idproyecto` = '$id';";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
+    }
+    // CAMBIAR ESTADO DE PROYECTOS END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
 
 }
 

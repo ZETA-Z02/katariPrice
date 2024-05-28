@@ -4,7 +4,7 @@ class View
 {
   public $mensaje;
   public $data;
-  public $html;
+  public $data2;
 
   function __construct()
   {

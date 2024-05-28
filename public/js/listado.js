@@ -1,6 +1,5 @@
 // tablas cotizaciones y proyectos
 $(document).ready(() => {
-
   $("#tabla-cotizaciones").show();
   $("#tabla-proyectos").hide();
   $("#lista").change(function () {
@@ -37,7 +36,6 @@ $(document).ready(() => {
     }
   });
 });
-
 function getCotizacionesNatural() {
   $.ajax({
     type: "GET",
@@ -54,7 +52,7 @@ function getCotizacionesNatural() {
                     <td>${element.precio}</td>
                     <td>${element.estado}</td>
                     <td>${element.fechaLimite}</td>
-                    <td><a href="http://localhost/katariPrice/listado/cotizacionNaturalDetalle/${element.idcotizacion}">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/cotizacionNaturalDetalle/${element.idcotizacion}" class="button">detalles</a></td>
                 </tr>`;
       });
       $("#tbody-cotizaciones-natural").html(html);
@@ -78,7 +76,7 @@ function getCotizacionesJuridica() {
                     <td>${element.precio}</td>
                     <td>${element.estado}</td>
                     <td>${element.fechaLimite}</td>
-                    <td><a href="http://localhost/katariPrice/listado/cotizacionJuridicaDetalle/${element.idcotizacion}">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/cotizacionJuridicaDetalle/${element.idcotizacion}" class="button">detalles</a></td>
                 </tr>`;
       });
       $("#tbody-cotizaciones-juridica").html(html);
@@ -104,7 +102,7 @@ function getCotizacionesNaturalEstado(estado) {
                     <td>${element.precio}</td>
                     <td>${element.estado}</td>
                     <td>${element.fechaLimite}</td>
-                    <td><a href="http://localhost/katariPrice/listado/cotizacionNaturalDetalle/${element.idcotizacion}">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/cotizacionNaturalDetalle/${element.idcotizacion}" class="button">detalles</a></td>
                 </tr>`;
       });
       $("#tbody-cotizaciones-natural").html(html);
@@ -129,7 +127,7 @@ function getCotizacionesJuridicaEstado(estado) {
                     <td>${element.precio}</td>
                     <td>${element.estado}</td>
                     <td>${element.fechaLimite}</td>
-                    <td><a href="http://localhost/katariPrice/listado/cotizacionJuridicaDetalle/${element.idcotizacion}">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/cotizacionJuridicaDetalle/${element.idcotizacion}" class="button">detalles</a></td>
                 </tr>`;
       });
       $("#tbody-cotizaciones-juridica").html(html);
@@ -179,8 +177,9 @@ function getProyectosNatural() {
                     <td>${element.pendiente}</td>
                     <td>${element.total}</td>
                     <td>${element.entrega}</td>
-                    <td><a href="http://localhost/katariPrice/listado/proyectoNaturalDetalle/${element.idproyecto}">detalles</a></td>
-                    <td><a href="http://localhost/katariPrice/listado/proyectoPagos/${element.idproyecto}">Pagos</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoNaturalDetalle/${element.idproyecto}" class="button">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoAvances/${element.idproyecto}" class="button success">Avances</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoPagos/${element.idproyecto}" class="button warning">Pagos</a></td>
                 </tr>`;
       });
       $("#tbody-proyectos-natural").html(html);
@@ -207,8 +206,9 @@ function getProyectosJuridica() {
                     <td>${element.pendiente}</td>
                     <td>${element.total}</td>
                     <td>${element.entrega}</td>
-                    <td><a href="http://localhost/katariPrice/listado/proyectoJuridicaDetalle/${element.idproyecto}">detalles</a></td>
-                    <td><a href="http://localhost/katariPrice/listado/proyectoPagos/${element.idproyecto}">Pagos</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoJuridicaDetalle/${element.idproyecto}" class="button">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoAvances/${element.idproyecto}" class="button success">Avances</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoPagos/${element.idproyecto}" class="button warning">Pagos</a></td>
                 </tr>`;
       });
       $("#tbody-proyectos-juridica").html(html);
@@ -236,8 +236,9 @@ function getProyectosNaturalEstado(estado) {
                     <td>${element.pendiente}</td>
                     <td>${element.total}</td>
                     <td>${element.entrega}</td>
-                    <td><a href="http://localhost/katariPrice/listado/proyectoNaturalDetalle/${element.idcotizacion}">detalles</a></td>
-                    <td><a href="http://localhost/katariPrice/listado/proyectoPagos/${element.idproyecto}">Pagos</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoNaturalDetalle/${element.idproyecto}" class="button">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoAvances/${element.idproyecto}" class="button success">Avances</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoPagos/${element.idproyecto}" class="button warning">Pagos</a></td>
                 </tr>`;
       });
       $("#tbody-proyectos-natural").html(html);
@@ -265,8 +266,9 @@ function getProyectosJuridicaEstado(estado) {
                     <td>${element.pendiente}</td>
                     <td>${element.total}</td>
                     <td>${element.entrega}</td>
-                    <td><a href="http://localhost/katariPrice/listado/proyectoJuridicaDetalle/${element.idproyecto}">detalles</a></td>
-                    <td><a href="http://localhost/katariPrice/listado/proyectoPagos/${element.idproyecto}">Pagos</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoJuridicaDetalle/${element.idproyecto}" class="button">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoAvances/${element.idproyecto}" class="button success">Avances</a></td>
+                    <td><a href="http://localhost/katariPrice/listado/proyectoPagos/${element.idproyecto}" class="button warning">Pagos</a></td>
                 </tr>`;
       });
       $("#tbody-proyectos-juridica").html(html);

@@ -154,7 +154,8 @@
 - nomProyecto -> nombre del proyecto 
 - idnatural -> identificador foraneo si es una persona natural sino es 0
 - idjuridica -> identificador foraneo si es una persona juridica sino es 0
-- monto -> precio del servicio sin igv
+- monto(subtotal) -> precio del servicio sin igv
+- monto -?> monto que pago hasta ahora
 - fecha -> fecha de inicio del proyecto
 - saldo -> saldo pendiente, monto que todavia le falta pagar
 - igv -> igv, impuestos del estado peruano
