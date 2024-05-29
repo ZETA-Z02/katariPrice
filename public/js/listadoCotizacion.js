@@ -79,7 +79,8 @@ function postProyecto() {
       processData: false,
       contentType: false,
       success: function (response) {
-        console.log(response)
+        console.log(response);
+        location.reload();
         //  $("#modal-proyecto").hide();
         //$("#idpersonal-nuevo").val(response);
       },

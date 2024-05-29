@@ -13,7 +13,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="<?php echo constant('URL'); ?>public/foundation/js/jquery.js"></script>
   <script src="<?php echo constant('URL'); ?>public/foundation/js/foundation.js"></script>
-  <link rel="stylesheet" href="<?php echo constant('URL'); ?>public/css/css/login.css">
+  <link rel="stylesheet" href="<?php echo constant('URL'); ?>public/css/login.css">
 </head>
 
 <body>
@@ -22,15 +22,11 @@
       <div class="cell large-6 callout info-z">
         <div class="padding-horizontal-2">
           <h1>Katari-Software y desarrollo</h1>
-
-
           <p class="lead">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi facilis suscipit, voluptates deserunt
             sapiente pariatur hic velit itaque voluptate! Non quod dolorem aperiam nulla neque labore. Blanditiis magni
             sapiente repudiandae?
           </p>
-
-
           <a href="" class="button">facebook</a>
           <a href="" class="button alert">Gmail</a>
         </div>

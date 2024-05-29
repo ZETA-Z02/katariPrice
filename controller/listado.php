@@ -233,6 +233,39 @@ class Listado extends Controller
 		}
 		echo json_encode($json);
 	}
+	public function deudaDetalle(){
+		$id = $_POST['idproyecto'];
+		$data = $this->model->DeudaDetalle($id);
+		echo json_encode($data);
+	}
+	public function postPago(){
+		$idproyecto = $_POST['idproyecto'];
+		$idpago = $_POST['idpago'];
+		$monto = $_POST['monto'];
+		$concepto = $_POST['concepto'];
+		$proyecto = $this->model->selectProyecto($idproyecto);
+		$pago = $this->model->selectPago($idproyecto);
+		$montoPago = $pago['monto'] + $monto;
+		$saldoPago = $pago['total'] - $montoPago;
+		$pendienteProyecto = $proyecto['total'] - $montoPago;
+		// echo "monto nuevo pago: $monto--> monto nuevo que pago: $montoPago --> pendiente nuevo proyecto: $pendienteProyecto --> saldo nuevo proyecto: $saldoPago";
+		$this->model->conn->conn->begin_transaction();
+        try {
+			$res = $this->model->PostPago($idpago, $monto, $concepto);
+			$res1 = $this->model->updatePago($idproyecto,$montoPago,$saldoPago);
+			$res2 = $this->model->updateProyecto($idproyecto,$pendienteProyecto);
+            $this->model->conn->conn->commit();
+			if($res && $res1 && $res2){
+				echo "EXITO EN LA INSERCION DE PAGO";
+			}else{
+				echo "ERROR EN LA INSERCION DE PAGO";
+			}
+        } catch (Exception $e) {
+            $this->model->conn->conn->rollback();
+            echo "Error en model: " . $e->getMessage();
+        }
+        $this->model->conn->conn->close();
+	}
 	// ***************************PAGOS PROYECTO*END*******************
 
 	// -*-*-*-*-*-*-*-*-*PROYECTO AVANCES-*-*-*-*-*-*

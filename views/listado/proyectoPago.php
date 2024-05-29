@@ -10,7 +10,7 @@
                 <p class="lead callout">Nombre del Proyecto: <?php echo $this->data['nomproyecto'] ?></p>
             </div>
             <div class="cell large-3 lead callout">
-                <input type="text" value="<?php echo $this->data['idproyecto'] ?>">
+                <input type="text" id="idproyecto" value="<?php echo $this->data['idproyecto'] ?>" disabled>
                 <input type="text" id="idpago" value="<?php echo $this->data['idpago'] ?>" hidden style="display:none;">
             </div>
             <div class="cell large-9">
@@ -56,14 +56,14 @@
                 <p class="lead callout shadow">Estado: <?php echo $this->data['estado'] ?></p>
             </div>
             <div class="grid-x">
-                <div class="cell callout">
-                    Total de Pagos:
+                <div class="cell grid-x align-justify callout">
+                    Total de Pagos: <p id="total-pagos">000.00</p>
                 </div>
-                <div class="cell callout">
-                    Saldo:
+                <div class="cell grid-x align-justify callout">
+                    Deuda: <p id="deuda">000.00</p>
                 </div>
-                <div class="cell callout">
-                    Deuda:
+                <div class="cell grid-x align-justify callout">
+                    Total: <p id="total">000.00</p>
                 </div>
             </div>
         </div>
@@ -78,11 +78,11 @@
         <div class="cell grid-x align-center text-center">
             <span class="cell">
                 <label for="">Concepto</label>
-                <input type="text">
+                <input type="text" id="concepto">
             </span>
             <span class="cell">
                 <label for="">Monto</label>
-                <input type="text">
+                <input type="text" id="monto">
             </span>
         </div>
         <div class="cell grid-x align-spaced">
