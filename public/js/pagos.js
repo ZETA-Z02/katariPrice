@@ -5,9 +5,13 @@ $(document).ready(function(){
     $("#registrar-pago").click(function(){
         $("#pago-modal").show();
     });
-    $("#guardar-pago, #cancelar-pago").click(function(){
+    $("#guardar-pago").click(function(){
         postPago()
     });
+    $("#cancelar-pago").click(function(){
+        $("#pago-modal").hide();
+    });
+    
 });
 // DETALLES DE PAGOS DE UN PROYECTO EN ESPECIFICO
 function pagoDetalles(){
@@ -76,3 +80,12 @@ function postPago(){
     });
 }
 // -*-*-*-*-*-*-*-*-*-GUARDAR PAGO-END*-*-*-*-*-*-*-*-*--*
+
+// ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++
+$(document).ready(function () {
+    //numberFloat(selector)
+    //justStrings(selector)
+    //numberLeght(selector, maxLength)
+    numberFloat("#monto");
+  });
+  // ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++

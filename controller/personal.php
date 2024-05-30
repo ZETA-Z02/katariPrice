@@ -56,8 +56,7 @@ class Personal extends Controller
 			echo $this->model->conn->conn->insert_id;
 		}else{
 			echo "ERROR AL INSERTAR";
-		}
-		
+		}	
 	}
 	public function createLogin(){
 		$idpersonal = $_POST['idpersonal'];

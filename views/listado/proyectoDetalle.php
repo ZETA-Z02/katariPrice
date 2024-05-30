@@ -32,7 +32,7 @@
         </div>
         <div class="cell">
             <label for="">Fecha Entrega</label>
-            <input type="text" id="feEntrega" value="<?php echo @$this->data['feEntrega']; ?>">
+            <input type="date" id="feEntrega" value="<?php echo @$this->data['feEntrega']; ?>">
         </div>
         <div class="cell">
             <label for="">Creacion del Proyecto</label>

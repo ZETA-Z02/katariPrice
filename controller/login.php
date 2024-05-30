@@ -18,6 +18,7 @@ class Login extends Controller
 		$pass = trim(strtolower($_POST['password']));
 		
 		$validar = $this->model->Validar($user,$pass);
+
 		if($validar['usuario'] == $user && $validar['password'] == $pass){
 			if($validar['estado'] == 0){
 				$this->view->mensaje = 'Este usuario no se encuentra activo';
@@ -30,7 +31,7 @@ class Login extends Controller
 			$_SESSION['idpersonal'] = $validar['idpersonal'];
 			$this->view->mensaje = 'Credenciales correctas';
 			header('location:'.constant('URL').'dashboard');
-		}else{
+		}else {
 			$this->view->mensaje = 'Credenciales incorrectas';
 			header('location:'.constant('URL'));
 		}

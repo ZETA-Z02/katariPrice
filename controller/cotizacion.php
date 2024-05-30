@@ -24,7 +24,7 @@ class Cotizacion extends Controller
 		$direccion = $_POST['direccion'];
 		$ciudad = $_POST['ciudad'];
 
-		if ($this->model->Natural($nombre, $apellidos, $dni, $telefono, $email, $sexo, $direccion, $ciudad)) {
+		if ($this->model->Natural($nombre,$apellidos,$dni,$sexo,$ciudad,$telefono,$email,$direccion)) {
 			echo "REGISTRO EXITOSO";
 		} else {
 			echo "REGISTRO FALLIDO";
@@ -42,7 +42,7 @@ class Cotizacion extends Controller
 		$rubro = $_POST['rubro'];
 		$direccion = $_POST['direccion'];
 
-		if ($this->model->Juridica($razonsocial, $telefono, $email, $web, $ruc, $rubro, $direccion)) {
+		if ($this->model->Juridica($razonsocial,$telefono,$email,$web,$ruc,$rubro,$direccion)) {
 			echo "REGISTRO EXITOSO";
 		} else {
 			echo "REGISTRO FALLIDO";

@@ -6,7 +6,6 @@ $(document).ready(function () {
       let estado = "cancelado";
       let id = $("#idcotizacion").val();
       cambiarEstado(id, estado);
-      location.reload();
     } else {
       console.log("Acción de cancelación abortada por el usuario.");
     }
@@ -15,7 +14,6 @@ $(document).ready(function () {
     let estado = "aceptado";
     let id = $("#idcotizacion").val();
     cambiarEstado(id, estado);
-    location.reload();
   });
   //-*-*-*-*-*-*-CAMBIAR DE ESTADO END*-*-*-*-*-
 });
@@ -39,10 +37,11 @@ function cambiarEstado(id, estado) {
     url: "http://localhost/katariPrice/listado/cotizacionEstado",
     data: { id, estado },
     success: function (response) {
-      console.log(response);
+      location.reload();
     },
     error: function (error) {
-      console.log("error:" + error);
+      confirmation(0,"Error al Actualizar");
+      //console.log("error:" + error);
     },
   });
 }
@@ -71,7 +70,6 @@ function postProyecto() {
     formData.append("idpersonal", idpersonal);
     formData.append("tipoCliente", tipoCliente);
     formData.append("id", id);
-
     $.ajax({
       url: $(this).attr("action"),
       type: "POST",
@@ -79,15 +77,15 @@ function postProyecto() {
       processData: false,
       contentType: false,
       success: function (response) {
-        console.log(response);
+        //console.log(response);
         location.reload();
-        //  $("#modal-proyecto").hide();
+        //$("#modal-proyecto").hide();
         //$("#idpersonal-nuevo").val(response);
       },
       error: function (error) {
         console.error("Error:", error);
         // Aquí puedes manejar los errores
-        alert("Hubo un error al enviar el formulario.");
+        confirmation(0,"Falta rellenar el formulario");
       },
     });
   });

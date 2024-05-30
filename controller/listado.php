@@ -304,7 +304,7 @@ class Listado extends Controller
 		$idpersonal = $_POST['idpersonal'];
 		$idcotizacion = $_POST['idcotizacion'];
 		// para la tabla pagos
-		$monto = $_POST['monto'];
+		$monto = $_POST['monto'] == '' ? 0.00 : $_POST['monto'];
 		$saldo = floatval($total) - floatval($monto);
 		$igv = floatval($total) * 0.18;
 		$pendiente = floatval($total) - floatval($monto);

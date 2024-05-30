@@ -159,11 +159,11 @@
     </div>
     <div class="cell large-6">
         <label for="">Total:</label>
-        <input type="text" name="total" value="" id="total-proyecto">
+        <input type="text" name="total" value="<?php echo @$this->data['precio']; ?>" id="total-proyecto">
     </div>
     <div class="cell large-6">
         <label for="">Adelanto:</label>
-        <input type="text" name="monto" value="" id="total-proyecto">
+        <input type="text" name="monto" value="0" id="total-proyecto">
     </div>
     <div class="cell">
         <label for="">Descripcion:</label>

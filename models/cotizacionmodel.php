@@ -8,26 +8,25 @@ class CotizacionModel extends Model{
     // INSERCIONES CLIENTES NATURAL Y JURIDICO
     public function Natural($nombre,$apellidos,$dni,$sexo,$ciudad,$telefono,$email,$direccion){
         $sql = "INSERT INTO `pernatural` (`nombre`, `apellidos`, `dni`, `sexo`, `ciudad`, `telefono`, `email`, `direccion`) VALUES ('$nombre', '$apellidos', '$dni', '$sexo', '$ciudad', '$telefono', '$email', '$direccion');";
-        $data = $this->conn->ConsultaCon($sql);
-        return $data;
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
     }
     public function Juridica($razonsocial,$telefono,$email,$web,$ruc,$rubro,$direccion){
-        $sql = "INSERT INTO `katari`.`perjuridica` (`razonsocial`, `telefono`, `email`, `web`, `ruc`, `rubro`, `direccion`) VALUES ('$razonsocial', '$telefono', '$email', '$web', $ruc, '$rubro', '$direccion');";
-        $data = $this->conn->ConsultaCon($sql);
-        return $data;
+        $sql = "INSERT INTO `katari`.`perjuridica` (`razonsocial`, `telefono`, `email`, `web`, `ruc`, `rubro`, `direccion`) VALUES ('$razonsocial', '$telefono', '$email', '$web', '$ruc', '$rubro', '$direccion');";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
     }
     // INSERCIONES CLIENTES NATURAL Y JURIDICO END
     // CONSULTAS-> OBTENER
     public function GetNatural(){
-        $sql = "SELECT * FROM natural_tabla;";
-        $res = $this->conn->ConsultaCon($sql);
-        return $res;
-
+        $sql = "SELECT *, CONCAT(nombre, ' ', apellidos) AS nombres FROM pernatural ORDER BY feCreate DESC;";
+        $data = $this->conn->ConsultaCon($sql);
+        return $data;
     }
     public function GetJuridica(){
-        $sql = "SELECT * FROM perjuridica;";
-        $res = $this->conn->ConsultaCon($sql);
-        return $res;
+        $sql = "SELECT * FROM perjuridica ORDER BY feCreate DESC;";
+        $data = $this->conn->ConsultaCon($sql);
+        return $data;
     }
     // Buscador
     public function SearchNatural($nombres,$dni){

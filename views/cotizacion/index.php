@@ -20,27 +20,27 @@
 				<input type="text" id="idnatural" hidden style="display:none;">
 				<div class="cell large-4">
 					<label for="">Nombre:</label>
-					<input type="text" id="nombres">
+					<input type="text" id="nombres" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">dni:</label>
-					<input type="text" id="dni">
+					<input type="text" id="dni" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">telefono:</label>
-					<input type="text" id="telefono">
+					<input type="text" id="telefono" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">Email:</label>
-					<input type="text" id="email">
+					<input type="text" id="email" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">direccion:</label>
-					<input type="text" id="direccion">
+					<input type="text" id="direccion" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">Ciudad:</label>
-					<input type="text" id="ciudad">
+					<input type="text" id="ciudad" disabled>
 				</div>
 			</div>
 		</div>
@@ -52,27 +52,27 @@
 				<input type="text" id="idjuridica" hidden style="display:none;">
 				<div class="cell large-4">
 					<label for="">Razon Social:</label>
-					<input type="text" id="razonsocial">
+					<input type="text" id="razonsocial" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">Ruc:</label>
-					<input type="text" id="ruc">
+					<input type="text" id="ruc" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">Telefono:</label>
-					<input type="text" id="telefono-juridica">
+					<input type="text" id="telefono-juridica" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">Email:</label>
-					<input type="text" id="email-juridica">
+					<input type="text" id="email-juridica" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">Rubro:</label>
-					<input type="text" id="rubro">
+					<input type="text" id="rubro" disabled>
 				</div>
 				<div class="cell large-4">
 					<label for="">Web:</label>
-					<input type="text" id="web">
+					<input type="text" id="web" disabled>
 				</div>
 			</div>
 		</div>
@@ -344,15 +344,15 @@
 			</div>
 			<label for="" class="cell large-3">
 				Nombre:
-				<input type="text" name="nombre">
+				<input type="text" name="nombre" id="nat-nombre">
 			</label>
 			<label for="" class="cell large-3">
 				Apellidos:
-				<input type="text" name="apellidos">
+				<input type="text" name="apellidos" id="nat-apellidos">
 			</label>
 			<label for="" class="cell large-3">
 				DNI:
-				<input type="text" name="dni">
+				<input type="text" name="dni" id="nat-dni">
 			</label>
 			<label for="" class="cell large-3">
 				Sexo:
@@ -363,15 +363,15 @@
 			</label>
 			<label for="" class="cell large-3">
 				Ciudad:
-				<input type="text" name="ciudad">
+				<input type="text" name="ciudad" id="nat-ciudad">
 			</label>
 			<label for="" class="cell large-3">
 				Telefono:
-				<input type="text" name="telefono">
+				<input type="text" name="telefono" id="nat-telefono">
 			</label>
 			<label for="" class="cell large-3">
 				Email:
-				<input type="text" name="email">
+				<input type="email" name="email">
 			</label>
 			<label for="" class="cell large-3">
 				Direccion:
@@ -392,15 +392,15 @@
 			</div>
 			<label for="" class="cell large-3">
 				Razon Social:
-				<input type="text" name="razonsocial">
+				<input type="text" name="razonsocial" id="jur-razonsocial">
 			</label>
 			<label for="" class="cell large-3">
 				Telefono:
-				<input type="text" name="telefono">
+				<input type="text" name="telefono" id="jur-telefono">
 			</label>
 			<label for="" class="cell large-3">
 				Email:
-				<input type="text" name="email">
+				<input type="email" name="email">
 			</label>
 			<label for="" class="cell large-3">
 				Web:
@@ -408,11 +408,11 @@
 			</label>
 			<label for="" class="cell large-3">
 				RUC:
-				<input type="text" name="ruc">
+				<input type="text" name="ruc" id="jur-ruc">
 			</label>
 			<label for="" class="cell large-3">
 				Rubro:
-				<input type="text" name="rubro">
+				<input type="text" name="rubro" id="jur-rubro">
 			</label>
 			<label for="" class="cell large-3">
 				Direccion:
