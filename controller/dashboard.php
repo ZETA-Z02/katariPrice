@@ -24,4 +24,16 @@ class Dashboard extends Controller
 		);
 		echo json_encode($json);
 	}
+	public function proyectos(){
+		$id = $_POST['id'];
+		$proyectos = $this->model->Proyectos($id);
+		$json = array();
+		while($row = mysqli_fetch_assoc($proyectos)) {
+			$json[] = array(
+				"idproyecto"=>$row['idproyecto'],
+				"proyecto"=>$row['nomproyecto'],
+			);
+		}
+		echo json_encode($json);
+	}
 }

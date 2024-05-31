@@ -138,10 +138,12 @@ function eliminar(){
             url: "http://localhost/katariPrice/personal/delete/",
             data: {id},
             success: function (response) {
-                alert("Eliminado correctamente");
+                confirmation(1,"Eliminado Correctamente");
+                //alert("Eliminado correctamente");
                 tablaPersonal()
             },error:function (error){
-                console.log("error:" + error);
+                confirmation(0,"ERROR AL ELIMINAR");
+                //console.log("error:" + error);
             }
         });
     });

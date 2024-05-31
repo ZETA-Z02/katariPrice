@@ -1,5 +1,6 @@
 $(document).ready(function () {
     datos();
+    proyectos();
 });
 // DATOS 
 function datos(){
@@ -16,6 +17,28 @@ function datos(){
             console.log("ERROR EN LA PETICION: " + error);
         }
     });
+}
+function proyectos(){
+  let id = $("#idpersonal").val();
+  $.ajax({
+    type: "POST",
+    url: "http://localhost/katariPrice/dashboard/proyectos",
+    data: {id},
+    success: function (response) {
+      let data = JSON.parse(response);
+      html = "";
+      data.forEach(element => {
+        html += `
+            <div class="grid-x align-spaced">
+              <p>${element.proyecto}</p><a href="http://localhost/katariPrice/listado/proyectoNaturalDetalle/${element.idproyecto}"><i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+                `;
+      });
+      $("#mis-proyectos").html(html);
+    },error:function (error){
+      console.log("ERROR EN LA PETICION: " + error);
+    }
+  });
 }
 // DATOS END
 

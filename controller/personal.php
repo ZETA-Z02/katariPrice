@@ -102,8 +102,12 @@ class Personal extends Controller
 	}
 	public function delete(){
 		$id = $_POST['id'];
-		if($this->model->Delete($id) && $this->model->DeleteLogin($id)){
-			echo "EXITO AL ELIMINAR";
+		if($this->model->DeleteLogin($id)){
+			if($this->model->Delete($id)){
+				echo "EXITO AL ELIMINAR";
+			}else{
+				echo "ERROR AL ELIMINAR";
+			}
 		}else{
 			echo "ERROR AL ELIMINAR";
 		}

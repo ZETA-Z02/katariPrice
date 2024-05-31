@@ -20,6 +20,11 @@ class DashboardModel extends Model{
         $data = $this->conn->ConsultaArray($sql);
         return $data;
     }
+    public function Proyectos($id){
+        $sql = "SELECT * FROM proyectos where idpersonal = '$id';";
+        $data = $this->conn->ConsultaCon($sql);
+        return $data;
+    }
     
     
 }

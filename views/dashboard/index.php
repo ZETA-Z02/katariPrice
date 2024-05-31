@@ -100,6 +100,15 @@
 				<i class="fa-solid fa-question"></i>
 				</button>
 			</div>
+			<hr>
+			<div class="cell text-center">
+				<h4>Mis proyectos:</h4>
+			</div>
+			<div class="cell" id="mis-proyectos">
+				<div class="grid-x align-spaced">
+					<p>nombre del proyecto</p><a href=""><i class="fa-solid fa-arrow-right"></i></a>
+				</div>
+			</div>
 		</div>
 		<!-- ACCIONES PARA IMPRIMIR END-->
 	</div>
