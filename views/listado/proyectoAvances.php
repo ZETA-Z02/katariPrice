@@ -17,7 +17,8 @@
                 <p class="lead">Total: <?php echo $this->data['totalactividades']; ?></p>
             </div>
             <div class="callout shadow">
-                <p class="lead">Avance: <?php echo $this->data['proyecto']; ?>%</p>
+                <p class="lead">Avance: <?php echo number_format($this->data2['porcentaje'], 2);
+?>%</p>
             </div>
             <div class="callout shadow">
                 <p class="lead">Fecha de entrega: <?php echo $this->data['feEntrega']; ?></p>
@@ -65,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <p class="lead" style="display:flex;">TOTAL DE REPORTES: <input type="text" id="total-reportes"></p>
+            <!-- <p class="lead" style="display:flex;">TOTAL DE REPORTES: <input type="text" id="total-reportes"></p> -->
         </div>
     </div>
     <div class="grid-x callout shadow modal-informe" id="modal-informe">

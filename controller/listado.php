@@ -342,7 +342,9 @@ class Listado extends Controller
 	{
 		$id = $nparam[0];
 		$proyecto = $this->model->selectProyecto($id);
+		$avances = $this->model->avancesSelect($id);
 		$this->view->data = $proyecto;
+		$this->view->data2 = $avances;
 		$this->avances();
 	}
 	public function avancesPersonal(){

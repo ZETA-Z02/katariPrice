@@ -1,4 +1,4 @@
-<?php
+    <?php
 class ListadoModel extends Model
 {
     function __construct()
@@ -173,7 +173,9 @@ class ListadoModel extends Model
     public function ProyectoActualizar($id, $actividades, $fecha, $descripcion)
     {
         $sql = "UPDATE `proyectos` SET `totalactividades` = '$actividades', `feEntrega` = '$fecha', `descripcion` = '$descripcion' WHERE `idproyecto` = '$id';";
+        $sql2 = "UPDATE `katari`.`proyectoavances` SET `totalactividades` = '$actividades' WHERE (`idproyecto` = '$id');";
         $res = $this->conn->ConsultaSin($sql);
+        $res2 = $this->conn->ConsultaSin($sql2);
         return $res;
     }
     // CAMBIAR ESTADO DE PROYECTOS END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
@@ -277,6 +279,12 @@ class ListadoModel extends Model
         WHERE `idproyecto` = '$idproyecto' AND `idpersonal` = '$idpersonal';";
         $res = $this->conn->ConsultaSin($sql);
         return $res;
+    }
+    public function avancesSelect($idproyecto)
+    {
+        $sql = "SELECT * FROM proyectoavances WHERE idproyecto = '$idproyecto'";
+        $data = $this->conn->ConsultaArray($sql);
+        return $data;
     }
     //  ---**-*-*-*-*-*-*-*-*-*-AVANCES END*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
