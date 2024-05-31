@@ -267,16 +267,6 @@ class Listado extends Controller
         $this->model->conn->conn->close();
 	}
 	// ***************************PAGOS PROYECTO*END*******************
-
-	// -*-*-*-*-*-*-*-*-*PROYECTO AVANCES-*-*-*-*-*-*
-	public function proyectoAvances($nparam = null)
-	{
-		$id = $nparam[0];
-		//$data = $this->model->ProyectoPagos($id);
-		//$this->view->data = $data;
-		$this->avances();
-	}
-	// -*-*-*-*-*-*-*-*-*PROYECTO AVANCES-END*-*-*-*-*-*
 	// CAMBIAR ESTADO DE COTIZACIONES */-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
 	public function cotizacionEstado()
 	{
@@ -346,4 +336,69 @@ class Listado extends Controller
 		}
 	}
 	// CAMBIAR ESTADO DE PROYECTOS END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
+
+	// ++-+-+--+-+-+-+--++--+--PROYECTO AVANCES+-++-+-+-+-+-+--+-+-+-+-+-+-+-+-+-+-+-
+	public function proyectoAvances($nparam = null)
+	{
+		$id = $nparam[0];
+		$proyecto = $this->model->selectProyecto($id);
+		$this->view->data = $proyecto;
+		$this->avances();
+	}
+	public function avancesPersonal(){
+		$id = $_POST['id'];
+		$avances = $this->model->selectAvances($id);
+		$personal = array();
+		$i = 1;
+		while($row = mysqli_fetch_assoc($avances)) {
+			$personal[] = array(
+				"num" => $i,
+				"idpersonal"=>$row['idpersonal'],
+				"nombres"=>$row['nombres'],
+				"reportes"=>$row['reportes'],
+				"porcentaje"=>$row['porcentaje'],
+			);
+			$i += 1;
+		}
+		echo json_encode($personal);
+	}
+	public function personalAvances(){
+		$id=$_POST['id'];
+		$personal = $this->model->avancesPersonal($id);
+		$json = array();
+		while($row = mysqli_fetch_assoc($personal)) {
+			$json[] = array(
+				"idpersonal"=>$row['idpersonal'],
+				"nombres"=>$row['nombres'],
+			);
+		}
+		echo json_encode($json);
+	}
+	public function agregar(){
+		$id = $_POST['idproyecto'];
+		$data = $this->model->selectProyecto($id);
+		$personal = $_POST['idpersonal'];
+		if ($this->model->PostAvances($id, $personal, 0, 0,$data['totalactividades'])) {
+			echo "insercion exitosa";
+		} else {
+			echo "ERROR EN LA INSERCION";
+		}
+	}
+	public function subirInforme(){
+		$idproyecto = $_POST['idproyecto'];
+		$idpersonal = $_POST['idpersonal'];
+		$asunto = $_POST['asunto'];
+		$descripcion = $_POST['descripcion'];
+		$iniciales = $_POST['iniciales'];
+		if ($this->model->SubirInforme($idproyecto,$idpersonal,$asunto,$descripcion,$iniciales)) {
+			if($this->model->updateAvances($idproyecto, $idpersonal)){
+				echo "INsertado u actualizado correctamente";
+			}else{
+				echo "ERROR EN LA ACTUALIZACION DE AVANCES";	
+			}
+		} else {
+			echo "ERROR EN LA INSERCION";
+		}
+	}
+	// ++-+-+--+-+-+-+--++--+--PROYECTO AVANCES+END-++-+-+-+-+-+--+-+-+-+-+-+-+-+-+-+-+-
 }

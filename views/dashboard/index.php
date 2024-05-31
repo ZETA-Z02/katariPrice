@@ -36,7 +36,7 @@
 	<div class="grid-x grid-margin-x">
 		<!-- GRAFICOS -->
 		<div class="cell large-9 grid-x grid-margin-x grid-margin-y">
-			<div class="cell large-6 medium-12">
+			<div class="cell large-6 medium-12 small-12">
 				<div class="cell">
 					<h4>GRAFICO DE BARRAS</h4>
 				</div>
@@ -44,7 +44,7 @@
 					<canvas id="barras"></canvas>
 				</div>
 			</div>
-			<div class="cell large-6 medium-12">
+			<div class="cell large-6 medium-12 small-12">
 				<div class="cell">
 					<h4>GRAFICO LINEAL</h4>
 				</div>
@@ -52,7 +52,7 @@
 					<canvas id="lineal"></canvas>
 				</div>
 			</div>
-			<div class="cell large-6 medium-12">
+			<div class="cell large-6 medium-12 small-12">
 				<div class="cell">
 					<h4>GRAFICO POLAR AREA</h4>
 				</div>
@@ -60,7 +60,7 @@
 					<canvas id="area"></canvas>
 				</div>
 			</div>
-			<div class="cell large-6 medium-12">
+			<div class="cell large-6 medium-12 small-12">
 				<div class="cell">
 					<h4>GRAFICO PASTEL</h4>
 				</div>

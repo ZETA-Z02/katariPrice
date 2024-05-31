@@ -70,12 +70,13 @@ function postPago(){
         url: "http://localhost/katariPrice/listado/postPago",
         data: {idproyecto,idpago,monto,concepto},
         success: function (response) {
-            console.log(response);
+            confirmation(1,"Pago Guardado Con Exito!");
             $("#pago-modal").hide();
             pagoDetalles();
             deudas()
         },error: function(error){
-            console.log("ERROR EN POST:"+error)
+            confirmation(0,"Error al Guardar el Pago");
+            //console.log("ERROR EN POST:"+error)
         }
     });
 }

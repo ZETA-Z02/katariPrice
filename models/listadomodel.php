@@ -8,13 +8,13 @@ class ListadoModel extends Model
     // LISTAS COTIZACIONES
     public function ListarCotizacionesNatural()
     {
-        $sql = "SELECT * from cotizacion_natural;";
+        $sql = "SELECT * from cotizacion_natural ORDER BY feCreate DESC;";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
     public function ListarCotizacionesJuridica()
     {
-        $sql = "SELECT * FROM cotizacion_juridica;";
+        $sql = "SELECT * FROM cotizacion_juridica ORDER BY feCreate DESC;";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
@@ -34,13 +34,13 @@ class ListadoModel extends Model
     // LISTAS PROYECTOS 
     public function ListarProyectosNatural()
     {
-        $sql = "SELECT * FROM proyectos_natural;";
+        $sql = "SELECT * FROM proyectos_natural ORDER BY feCreate DESC;";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
     public function ListarProyectosJuridica()
     {
-        $sql = "SELECT * FROM proyectos_juridica;";
+        $sql = "SELECT * FROM proyectos_juridica ORDER BY feCreate DESC;";
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
@@ -132,6 +132,7 @@ class ListadoModel extends Model
             $res1 = $this->conn->ConsultaSin($sqlPago);
             $idpago = $this->conn->conn->insert_id;
             $res2 = $this->PostPago($idpago, $monto, "Primer Pago");
+            $res3 = $this->PostAvances($idproyecto, $idpersonal, 0, 0,$actividades);
             $this->conn->conn->commit();
             return $res2;
         } catch (Exception $e) {
@@ -152,6 +153,7 @@ class ListadoModel extends Model
             $res1 = $this->conn->ConsultaSin($sqlPago);
             $idpago = $this->conn->conn->insert_id;
             $res2 = $this->PostPago($idpago, $monto, "Primer Pago");
+            $res3 = $this->PostAvances($idproyecto, $idpersonal, 0, 0,$actividades);
             $this->conn->conn->commit();
             return $res2;
         } catch (Exception $e) {
@@ -196,7 +198,8 @@ class ListadoModel extends Model
         $data = $this->conn->ConsultaCon($sql);
         return $data;
     }
-    public function DeudaDetalle($id){
+    public function DeudaDetalle($id)
+    {
         $sql = "SELECT * FROM pagos WHERE idproyecto = '$id';";
         $data = $this->conn->ConsultaArray($sql);
         return $data;
@@ -222,6 +225,7 @@ class ListadoModel extends Model
         return $res;
 
     }
+    // esta funcion tambien se utiliza para proyectoAvances 
     public function selectProyecto($idproyecto)
     {
         $sql = "SELECT * FROM proyectos WHERE idproyecto = '$idproyecto'";
@@ -235,6 +239,46 @@ class ListadoModel extends Model
         return $data;
     }
     // GUARDAR PAGO DETALLE END
+    //  ---**-*-*-*-*-*-*-*-*-*-AVANCES*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+    public function PostAvances($idproyecto, $idpersonal, $reportes, $porcentaje,$totalactividades)
+    {
+        $sql = "INSERT INTO `proyectoavances` (`idproyecto`, `idpersonal`, `reportes`, `porcentaje`, `totalactividades`) VALUES ('$idproyecto', '$idpersonal', '$reportes', '$porcentaje', '$totalactividades');";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
+    }
+    public function selectAvances($idproyecto)
+    {
+        $sql = "SELECT CONCAT(p.nombre,' ',p.apellidos) AS nombres, a.* FROM proyectoavances a JOIN personal p ON p.idpersonal = a.idpersonal WHERE a.idproyecto ='$idproyecto';";
+        $data = $this->conn->ConsultaCon($sql);
+        return $data;
+    }
+    public function avancesPersonal($id){
+        $sql = "SELECT DISTINCT p.idpersonal, CONCAT(p.nombre, ' ', p.apellidos) AS nombres
+        FROM personal p
+        LEFT JOIN proyectoavances a ON p.idpersonal = a.idpersonal
+        WHERE p.idpersonal NOT IN (
+            SELECT idpersonal 
+            FROM proyectoavances 
+            WHERE idproyecto = $id);";
+        $data = $this->conn->ConsultaCon($sql);
+        return $data;
+    }
+    public function SubirInforme($idproyecto,$idpersonal,$asunto,$descripcion,$iniciales){
+        $sql = "INSERT INTO `katari`.`proyectoinformes` (`idproyecto`, `idpersonal`, `asunto`, `descripcion`, `iniciales`) VALUES ('$idproyecto', '$idpersonal', '$asunto', '$descripcion', '$iniciales');";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
+    }
+
+    public function updateAvances($idproyecto, $idpersonal)
+    {
+        $sql = "UPDATE `proyectoavances`
+        SET `reportes` = `reportes` + 1,
+            `porcentaje` = (`reportes` / `totalactividades`) * 100
+        WHERE `idproyecto` = '$idproyecto' AND `idpersonal` = '$idpersonal';";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
+    }
+    //  ---**-*-*-*-*-*-*-*-*-*-AVANCES END*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
 }
 

@@ -51,7 +51,7 @@
         <div class="cell large-6">
             <label for="email">
                 Email:
-                <input type="text" id="email" name="email" value="">
+                <input type="email" id="email" name="email" value="">
             </label>
         </div>
         <div class="cell large-6">

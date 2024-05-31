@@ -46,13 +46,15 @@ function postPersonal() {
       processData: false,
       contentType: false,
       success: function (response) {
+        confirmation(1,"Creado Exitosamente!, Ahora Cree Su Login");
         $("#modal-login").show();
         $("#idpersonal-nuevo").val(response);
       },
       error: function (error) {
-        console.error("Error:", error);
+        confirmation(0,"ERROR AL CREAR");
+        //console.error("Error:", error);
         // Aquí puedes manejar los errores
-        alert("Hubo un error al enviar el formulario.");
+        //alert("Hubo un error al enviar el formulario.");
       },
     });
   });
@@ -69,12 +71,14 @@ function postLogin() {
       processData: false,
       contentType: false,
       success: function (response) {
+        confirmation(1,"Creado Exitosamente!, Ahora Inicia Sesion");
         $("#modal-login").hide();
       },
       error: function (error) {
-        console.error("Error:", error);
+        confirmation(0,"ERROR AL CREAR EL LOGIN");
+        //console.error("Error:", error);
         // Aquí puedes manejar los errores
-        alert("Hubo un error al enviar el formulario Login.");
+        //alert("Hubo un error al enviar el formulario Login.");
       },
     });
   });
@@ -91,12 +95,14 @@ function updateLogin() {
       processData: false,
       contentType: false,
       success: function (response) {
-        console.log("actualizado correctamente");
-        alert("Login actualizado correctamente");
+        confirmation(1,"Actualizado Correctamente");
+        // console.log("actualizado correctamente");
+        // alert("Login actualizado correctamente");
       },
       error: function (error) {
-        console.error("Error:", error);
-        alert("Hubo un error al enviar el formulario Login.");
+        confirmation(0,"ERROR AL CREAR SU LOGIN");
+        // console.error("Error:", error);
+        // alert("Hubo un error al enviar el formulario Login.");
       },
     });
   });
@@ -112,12 +118,14 @@ function updatePersonal() {
       processData: false,
       contentType: false,
       success: function (response) {
-        console.log("actualizado correctamente");
-        alert("Personal actualizado correctamente");
+        confirmation(1,"Actualizado Correctamente");
+        // console.log("actualizado correctamente");
+        // alert("Personal actualizado correctamente");
       },
       error: function (error) {
-        console.error("Error:", error);
-        alert("Hubo un error al enviar el formulario Personal.");
+        confirmation(0,"ERROR AL ACTUALIZAR EL PERSONAL");
+        // console.error("Error:", error);
+        // alert("Hubo un error al enviar el formulario Personal.");
       },
     });
   });
@@ -138,3 +146,14 @@ function eliminar(){
         });
     });
 }
+
+// ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++
+$(document).ready(function () { 
+  //numberFloat(selector)
+  //justStrings(selector)
+  //numberLeght(selector, maxLength)
+  justStrings("#nombre,#apellidos");
+  numberLeght("#dni",8);
+  numberLeght("#telefono",9);
+});
+// ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++
