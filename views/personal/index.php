@@ -1,4 +1,6 @@
 <?php require ('views/header.php');?>
+<!-- <script language="JavaScript" type="text/javascript" src="<?php echo constant('URL')?>public/assets/Assets/js/jquery1.4.2.js"></script> -->
+<link rel="stylesheet" href="<?php echo constant('URL')?>public/assets/Assets/css/jpaginate.css">
 <div class="grid-container full margin-top-1">
 	<div class="grid-x align-spaced">
 		<h2>Personal</h2>
@@ -27,7 +29,10 @@
 				</tr>
 			</tbody>
 		</table>
+		<div id="paginator1"></div>
 	</div>
 </div>
+<script language="JavaScript" type="text/javascript" src="<?php echo constant('URL')?>public/assets/Assets/js/jpaginate.js"></script>
+
 <script src="<?php echo constant('URL')?>public/js/personal.js"></script>
 <?php require ('views/footer.php');?>

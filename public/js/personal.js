@@ -28,6 +28,8 @@ function tablaPersonal() {
             </tr>`;
       });
       $("#personal-data").html(html);
+      // function de paginador
+      initPaginador(); 
     },
     error: function (error) {
       console.log("error:" + error);
@@ -46,12 +48,12 @@ function postPersonal() {
       processData: false,
       contentType: false,
       success: function (response) {
-        confirmation(1,"Creado Exitosamente!, Ahora Cree Su Login");
+        confirmation(1, "Creado Exitosamente!, Ahora Cree Su Login");
         $("#modal-login").show();
         $("#idpersonal-nuevo").val(response);
       },
       error: function (error) {
-        confirmation(0,"ERROR AL CREAR");
+        confirmation(0, "ERROR AL CREAR");
         //console.error("Error:", error);
         // Aquí puedes manejar los errores
         //alert("Hubo un error al enviar el formulario.");
@@ -71,11 +73,11 @@ function postLogin() {
       processData: false,
       contentType: false,
       success: function (response) {
-        confirmation(1,"Creado Exitosamente!, Ahora Inicia Sesion");
+        confirmation(1, "Creado Exitosamente!, Ahora Inicia Sesion");
         $("#modal-login").hide();
       },
       error: function (error) {
-        confirmation(0,"ERROR AL CREAR EL LOGIN");
+        confirmation(0, "ERROR AL CREAR EL LOGIN");
         //console.error("Error:", error);
         // Aquí puedes manejar los errores
         //alert("Hubo un error al enviar el formulario Login.");
@@ -95,12 +97,12 @@ function updateLogin() {
       processData: false,
       contentType: false,
       success: function (response) {
-        confirmation(1,"Actualizado Correctamente");
+        confirmation(1, "Actualizado Correctamente");
         // console.log("actualizado correctamente");
         // alert("Login actualizado correctamente");
       },
       error: function (error) {
-        confirmation(0,"ERROR AL CREAR SU LOGIN");
+        confirmation(0, "ERROR AL CREAR SU LOGIN");
         // console.error("Error:", error);
         // alert("Hubo un error al enviar el formulario Login.");
       },
@@ -118,44 +120,59 @@ function updatePersonal() {
       processData: false,
       contentType: false,
       success: function (response) {
-        confirmation(1,"Actualizado Correctamente");
+        confirmation(1, "Actualizado Correctamente");
         // console.log("actualizado correctamente");
         // alert("Personal actualizado correctamente");
       },
       error: function (error) {
-        confirmation(0,"ERROR AL ACTUALIZAR EL PERSONAL");
+        confirmation(0, "ERROR AL ACTUALIZAR EL PERSONAL");
         // console.error("Error:", error);
         // alert("Hubo un error al enviar el formulario Personal.");
       },
     });
   });
 }
-function eliminar(){
-    $(document).on("click", "#eliminar", function() {
-        let id = $(this).parent().parent().attr("id");
-        $.ajax({
-            type: "POST",
-            url: "http://localhost/katariPrice/personal/delete/",
-            data: {id},
-            success: function (response) {
-                confirmation(1,"Eliminado Correctamente");
-                //alert("Eliminado correctamente");
-                tablaPersonal()
-            },error:function (error){
-                confirmation(0,"ERROR AL ELIMINAR");
-                //console.log("error:" + error);
-            }
-        });
+function eliminar() {
+  $(document).on("click", "#eliminar", function () {
+    let id = $(this).parent().parent().attr("id");
+    $.ajax({
+      type: "POST",
+      url: "http://localhost/katariPrice/personal/delete/",
+      data: { id },
+      success: function (response) {
+        confirmation(1, "Eliminado Correctamente");
+        //alert("Eliminado correctamente");
+        tablaPersonal();
+      },
+      error: function (error) {
+        confirmation(0, "ERROR AL ELIMINAR");
+        //console.log("error:" + error);
+      },
     });
+  });
 }
 
 // ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++
-$(document).ready(function () { 
+$(document).ready(function () {
   //numberFloat(selector)
   //justStrings(selector)
   //numberLeght(selector, maxLength)
   justStrings("#nombre,#apellidos");
-  numberLeght("#dni",8);
-  numberLeght("#telefono",9);
+  numberLeght("#dni", 8);
+  numberLeght("#telefono", 9);
 });
 // ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++
+function initPaginador() {
+  var parametros = {
+    items: 3,
+    namecookies: "tabla",
+    next: "Siguiente",
+    previous: "Anterior",
+    inicial: "Primero",
+    final: "Último",
+    minimize: true,
+    tablecontent: "personal-data",
+    basenumerador: "paginator1",
+  };
+  $("#personal-data").jPaginate(parametros);
+}
