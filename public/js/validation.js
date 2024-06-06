@@ -53,3 +53,25 @@ function confirmation(type,mensaje){
         // $("#modal-error-global").hide();
     });
 }
+
+
+//*-*-*-*-*-*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+// NUMS = NUMERO DE FILAS
+// IDTABLE = ID DE LA TALBA SIN EL #
+// IDPAGINADOR = ID DEL PAGINADOR-> ES UN DIV VACIO CON ID
+function initPaginador(nums, idtable,idpaginador) {
+  var parametros = {
+    items: nums,
+    namecookies: "tabla",
+    next: "Siguiente",
+    previous: "Anterior",
+    inicial: "Primero",
+    final: "Último",
+    minimize: true,
+    tablecontent: idtable,
+    basenumerador: idpaginador,
+  };
+  $(`#${idtable}`).jPaginate(parametros);
+}
+
+//-**-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*

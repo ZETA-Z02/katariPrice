@@ -111,6 +111,7 @@ $(document).ready(function () {
                 `;
         });
         $("#tasks").html(template);
+        //initPaginador(5, "tasks", "natural-paginador");
       },
       error: function (error) {
         console.log("ERROR EN LA PETICION: " + error);

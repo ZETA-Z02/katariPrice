@@ -29,7 +29,7 @@ function tablaPersonal() {
       });
       $("#personal-data").html(html);
       // function de paginador
-      initPaginador(); 
+      initPaginador(5, "personal-data", "personal-paginador"); 
     },
     error: function (error) {
       console.log("error:" + error);
@@ -161,18 +161,5 @@ $(document).ready(function () {
   numberLeght("#dni", 8);
   numberLeght("#telefono", 9);
 });
+
 // ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++
-function initPaginador() {
-  var parametros = {
-    items: 3,
-    namecookies: "tabla",
-    next: "Siguiente",
-    previous: "Anterior",
-    inicial: "Primero",
-    final: "Último",
-    minimize: true,
-    tablecontent: "personal-data",
-    basenumerador: "paginator1",
-  };
-  $("#personal-data").jPaginate(parametros);
-}

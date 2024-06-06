@@ -27,6 +27,7 @@
                 <!-- Los datos de personas naturales se insertarán aquí -->
             </tbody>
         </table>
+        <div id="natural-paginador"></div>
     </div>
     <!-- Fin de la tabla de persona natural    -->
 

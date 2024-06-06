@@ -29,7 +29,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<div id="paginator1"></div>
+		<div id="personal-paginador"></div>
 	</div>
 </div>
 <script language="JavaScript" type="text/javascript" src="<?php echo constant('URL')?>public/assets/Assets/js/jpaginate.js"></script>
