@@ -23,6 +23,7 @@ function pagos() {
                 </tr>`;
       });
       $("#pagos").html(html);
+      initPaginador(5, "pagos", "pago-paginacion")
     },
     error: function (error) {
       console.log("error:" + error);

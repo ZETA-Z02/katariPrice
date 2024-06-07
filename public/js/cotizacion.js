@@ -19,7 +19,7 @@ $(document).ready(function () {
     var opcionSeleccionada = $(this).val();
     // Muestra el div correspondiente a la opción seleccionada
     $(
-      "#contenido-" + opcionSeleccionada + ",#contenido1-" + opcionSeleccionada+ ",#contenido2-" + opcionSeleccionada
+      "#contenido-" + opcionSeleccionada + ",#contenido1-" + opcionSeleccionada + ",#contenido2-" + opcionSeleccionada
     ).show();
   });
   // SELECT PARA QUE APAREZCA EL FORMULARIO END
@@ -53,13 +53,13 @@ $(document).ready(function () {
       success: function (response) {
         tablaNatural();
         //modal de confirmacion
-        confirmation(1,"Cliente Natural Creado!");
+        confirmation(1, "Cliente Natural Creado!");
         $("#natural-form").hide();
         $("#natural-modal-form")[0].reset();
       },
       error: function (error) {
         //modal de confirmacion
-        confirmation(0,"Falta rellenar el formulario");
+        confirmation(0, "Falta rellenar el formulario");
         $("#natural-modal-form")[0].reset();
       },
     });
@@ -76,12 +76,12 @@ $(document).ready(function () {
         tablaJuridica();
         $("#juridica-form").hide();
         //modal de confirmacion
-        confirmation(1,"Cliente Juridica Creado!");
+        confirmation(1, "Cliente Juridica Creado!");
         $("#juridica-modal-form")[0].reset();
       },
       error: function (error) {
         //modal de confirmacion
-        confirmation(0,"Falta rellenar el formulario");
+        confirmation(0, "Falta rellenar el formulario");
         $("#juridica-modal-form")[0].reset();
       },
     });
@@ -149,6 +149,7 @@ function tablaNatural() {
       });
       $("#datos-natural-table").html(html);
       seleccionarNatural(response);
+      initPaginador(5, "datos-natural-table", "natural-paginacion")
     },
     error: function (error) {
       console.log("ERROR EN LA PETICION: " + error);
@@ -179,6 +180,7 @@ function tablaJuridica() {
       });
       $("#datos-juridica-table").html(html);
       seleccionarJuridica(response);
+      initPaginador(5, "datos-juridica-table", "juridica-paginacion")
     },
     error: function (error) {
       console.log("ERROR EN LA PETICION: " + error);
@@ -492,13 +494,13 @@ function guardarSoftware() {
       },
       success: function (response) {
         if (response) {
-          confirmation(1,"Costos Guardado, Siga llenando la cotización");
+          confirmation(1, "Costos Guardado, Siga llenando la cotización");
           $("#contenido-software").hide();
           $("#idcalcSoftware").val(response);
         }
       },
       error: function (error) {
-        confirmation(0,"Falta rellenar el formulario");
+        confirmation(0, "Falta rellenar el formulario");
         //console.log("ERROR EN LA PETICION: " + error);
       },
     });
@@ -553,7 +555,7 @@ function getAplicacion() {
       });
       $("#aplicacion").html(html);
     },
-    error: function (error) {},
+    error: function (error) { },
   });
 }
 function getServicio() {
@@ -575,7 +577,7 @@ function getServicio() {
 }
 // *-*-*-*-*-*-*-FUNCIONES CALCULADORA DE SOFTWARE -END-*-*-*-*-*-*-
 // *-*-*-*-*-*-*-FUNCIONES CALCULADORA DE REDES -*-*-*-*-*-*-
-function calcularRedes(){
+function calcularRedes() {
   getRedesServicios();
   $("#redes,#dias,#cantidad,#precio").on("change", function () {
     let redes = parseFloat($("#redes").val());
@@ -630,7 +632,7 @@ function postEstadistica() {
     var id = $("#idjuridica").val();
     var tipoCliente = "juridica";
   } else {
-    confirmation(0,"SELECCIONE UNA PERSONA PARA CONTINUAR");
+    confirmation(0, "SELECCIONE UNA PERSONA PARA CONTINUAR");
     return;
   }
   let servicio = "100";
@@ -659,11 +661,11 @@ function postEstadistica() {
     },
     success: function (response) {
       //console.log(response);
-      confirmation(1,"Cotizacion de Estadistica Guardada!");
+      confirmation(1, "Cotizacion de Estadistica Guardada!");
     },
     error: function (error) {
       //console.log("ERROR EN LA PETICION ESTADISTICA: " + error);
-      confirmation(0,"Falta rellenar el formulario");
+      confirmation(0, "Falta rellenar el formulario");
     },
   });
 }
@@ -676,7 +678,7 @@ function postSoftware() {
     var id = $("#idjuridica").val();
     var tipoCliente = "juridica";
   } else {
-    confirmation(0,"SELECCIONE UNA PERSONA PARA CONTINUAR");
+    confirmation(0, "SELECCIONE UNA PERSONA PARA CONTINUAR");
     return;
   }
   // Id de la ultima cotizacion insertada-> NO TOCAR--?>>> HACER UNA VALIDACION SI ESTA VACIO ESTE CAMPO
@@ -690,7 +692,7 @@ function postSoftware() {
   let precio = $("#precio").val();
   let fecha = $("#fecha").val();
   let descripcion = $("#miTextarea").val();
-  if(idcalcSoftware == ""){
+  if (idcalcSoftware == "") {
     alert("Por favor ingrese datos en los calculos de la cotizacion");
     $("#contenido-software").show();
     return;
@@ -713,11 +715,11 @@ function postSoftware() {
     },
     success: function (response) {
       //console.log(response);
-      confirmation(1,"Cotizacion de Software Guardada!");
+      confirmation(1, "Cotizacion de Software Guardada!");
     },
     error: function (error) {
       //console.log("ERROR EN LA PETICION SOFTWARE: " + error);
-      confirmation(0,"Falta rellenar el formulario");
+      confirmation(0, "Falta rellenar el formulario");
     },
   });
 
@@ -733,7 +735,7 @@ function postRedes() {
     var tipoCliente = "juridica";
     var nombre = $("#razonsocial").val();
   } else {
-    confirmation(0,"SELECCIONE UNA PERSONA PARA CONTINUAR");
+    confirmation(0, "SELECCIONE UNA PERSONA PARA CONTINUAR");
     return;
   }
   let servicio = "300";
@@ -749,7 +751,7 @@ function postRedes() {
   let file = fileInput.files[0];  // Obtén el primer archivo seleccionado
   // Crear un objeto FormData y agregar todos los datos del formulario
   let formData = new FormData();
-  formData.append("nombre", nombre); 
+  formData.append("nombre", nombre);
   formData.append("id", id);
   formData.append("servicio", servicio);
   formData.append("costo", costo);
@@ -760,7 +762,7 @@ function postRedes() {
   formData.append("fecha", fecha);
   formData.append("descripcion", descripcion);
   formData.append("tipoCliente", tipoCliente);
-  formData.append("excel", file); 
+  formData.append("excel", file);
   $.ajax({
     type: "POST",
     url: "http://localhost/katariPrice/cotizacion/postRedes",
@@ -769,27 +771,27 @@ function postRedes() {
     contentType: false,  // No establecer ningún tipo de contenido
     success: function (response) {
       //console.log(response);
-      confirmation(1,"Cotizacion de Redes Guardada!");
+      confirmation(1, "Cotizacion de Redes Guardada!");
     },
     error: function (error) {
       //console.log("ERROR EN LA PETICION REDES: " + error);
-      confirmation(0,"Falta rellenar el formulario");
+      confirmation(0, "Falta rellenar el formulario");
     },
   });
 }
 // *-*-*-*-*-*-*-GUARDAR TODO EL FORMULARIO->PRINCIPAL END
 
 // ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++
-$(document).ready(function () { 
+$(document).ready(function () {
   //numberFloat(selector)
   //justStrings(selector)
   //numberLeght(selector, maxLength)
-  numberLeght("#dias,#cantidad,#sprints,#tiempo-mantenimiento",3);
-  numberLeght("#nat-dni,#natural-dni",8);
-  numberLeght("#nat-telefono,#jur-telefono",9);
+  numberLeght("#dias,#cantidad,#sprints,#tiempo-mantenimiento", 3);
+  numberLeght("#nat-dni,#natural-dni", 8);
+  numberLeght("#nat-telefono,#jur-telefono", 9);
   numberFloat("#precio,#cost-mantenimiento");
   justStrings("#nat-nombre,#nat-apellidos,#nat-ciudad,#jur-razonsocial,#jur-rubro,#natural-nombre,#juridica-razonsocial");
-  numberLeght("#jur-ruc,#juridica-ruc",11);
+  numberLeght("#jur-ruc,#juridica-ruc", 11);
 
 });
 // ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++

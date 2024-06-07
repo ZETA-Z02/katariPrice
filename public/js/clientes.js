@@ -111,7 +111,7 @@ $(document).ready(function () {
                 `;
         });
         $("#tasks").html(template);
-        //initPaginador(5, "tasks", "natural-paginador");
+        initPaginador(5, "tasks", "natural-paginador");
       },
       error: function (error) {
         console.log("ERROR EN LA PETICION: " + error);
@@ -180,6 +180,7 @@ $(document).ready(function () {
         });
         $("#task-juridica").html(template);
         // seleccionarNatural(response);
+        initPaginador(5, "task-juridica", "juridica-paginador");
       },
       error: function (error) {
         console.log("ERROR EN LA PETICION: " + error);

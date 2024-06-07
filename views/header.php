@@ -26,6 +26,7 @@
   <script src="<?php echo constant('URL') . 'public/foundation/js/jquery.js' ?>"></script>
   <!-- VALIDATION-->
   <script src="<?php echo constant('URL') . 'public/js/validation.js' ?>"></script>
+  <script language="JavaScript" type="text/javascript" src="<?php echo constant('URL') ?>public/assets/Assets/js/jpaginate.js"></script>
 </head>
 
 <body>
@@ -33,8 +34,7 @@
     <div class="off-canvas position-left reveal-for-large sidebar-z" id="offCanvas" data-off-canvas>
       <div class="grid-container nav-z">
         <div class="grid-x align-center margin-top-1">
-          <img class="shadow" src="<?php echo constant('URL') . 'public/images/katariwhite.png' ?>" alt="katari"
-            width="60%">
+          <img class="shadow" src="<?php echo constant('URL') . 'public/images/katariwhite.png' ?>" alt="katari" width="60%">
         </div>
         <hr>
         <div class="grid-x">
@@ -124,8 +124,7 @@
               <span><i class="fas fa-user-tie"></i> Bienvenido: <?php echo $_SESSION['username']; ?></span>
               <a href="#"><i class="fas fa-cog"></i></a>
               <!-- ID DEL PERSONAL PUESTO EN EL HEADER PARA QUE DESDE CUALQUIER FORMULARIO SE PUEDA LLAMAR -->
-              <input type="text" id="idpersonal" value="<?php echo $_SESSION['idpersonal']; ?>" hidden
-                style="display:none">
+              <input type="text" id="idpersonal" value="<?php echo $_SESSION['idpersonal']; ?>" hidden style="display:none">
             </div>
           </div>
         </header>

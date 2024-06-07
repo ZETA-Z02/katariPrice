@@ -30,28 +30,28 @@ function numberLeght(selector, maxLength) {
 
 // OCULTA LOS MODALES
 $(document).ready(function () {
-    $('.modal-confirmacion-global, .modal-error-global').css({'display': 'none'});
+  $('.modal-confirmacion-global, .modal-error-global').css({ 'display': 'none' });
 })
 // CONFIRMACION ,,, 1=EXITO, 0=ERROR
-function confirmation(type,mensaje){
-    if(type == 1){
-        $('.modal-confirmacion-global').css({'display': 'flex'});
-        $("#mensaje-modal").html(mensaje);
-        $("#modal-confirmacion-global").fadeIn();
-        //$("#modal-confirmacion-global").show();
-    }
-    if(type == 0){
-        $('.modal-error-global').css({'display': 'flex'});
-        $("#mensaje-modal-error").html(mensaje);
-        $("#modal-error-global").fadeIn();
-        //$("#modal-error-global").show();
-    }
-    $("#btn-confirm,#btn-error").on("click", function(){
-        $("#modal-confirmacion-global").fadeOut();
-        $("#modal-error-global").fadeOut();
-        // $("#modal-confirmacion-global").hide();
-        // $("#modal-error-global").hide();
-    });
+function confirmation(type, mensaje) {
+  if (type == 1) {
+    $('.modal-confirmacion-global').css({ 'display': 'flex' });
+    $("#mensaje-modal").html(mensaje);
+    $("#modal-confirmacion-global").fadeIn();
+    //$("#modal-confirmacion-global").show();
+  }
+  if (type == 0) {
+    $('.modal-error-global').css({ 'display': 'flex' });
+    $("#mensaje-modal-error").html(mensaje);
+    $("#modal-error-global").fadeIn();
+    //$("#modal-error-global").show();
+  }
+  $("#btn-confirm,#btn-error").on("click", function () {
+    $("#modal-confirmacion-global").fadeOut();
+    $("#modal-error-global").fadeOut();
+    // $("#modal-confirmacion-global").hide();
+    // $("#modal-error-global").hide();
+  });
 }
 
 
@@ -59,7 +59,7 @@ function confirmation(type,mensaje){
 // NUMS = NUMERO DE FILAS
 // IDTABLE = ID DE LA TALBA SIN EL #
 // IDPAGINADOR = ID DEL PAGINADOR-> ES UN DIV VACIO CON ID
-function initPaginador(nums, idtable,idpaginador) {
+function initPaginador(nums, idtable, idpaginador) {
   var parametros = {
     items: nums,
     namecookies: "tabla",

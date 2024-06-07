@@ -29,9 +29,9 @@ $(document).ready(() => {
   $("#estado").change(function () {
     let estado = $(this).val();
     let tipoPersona = $("#tipo-persona").val();
-    if(tipoPersona == "naturales"){
+    if (tipoPersona == "naturales") {
       getCotizacionesNaturalEstado(estado);
-    }else if(tipoPersona == "juridicas"){
+    } else if (tipoPersona == "juridicas") {
       getCotizacionesJuridicaEstado(estado);
     }
   });
@@ -56,8 +56,11 @@ function getCotizacionesNatural() {
                 </tr>`;
       });
       $("#tbody-cotizaciones-natural").html(html);
+      initPaginador(5, "tbody-cotizaciones-natural", "natural-paginacion")
     },
-    error: function (error) {},
+    error: function (error) {
+      console.log("error:" + error);
+    },
   });
 }
 function getCotizacionesJuridica() {
@@ -80,8 +83,9 @@ function getCotizacionesJuridica() {
                 </tr>`;
       });
       $("#tbody-cotizaciones-juridica").html(html);
+      initPaginador(5, "tbody-cotizaciones-juridica", "juridica-paginacion")
     },
-    error: function (error) {},
+    error: function (error) { },
   });
 }
 // TABLA COTIZACIONES POR SU ESTADO, DE LOS NATURALES Y JURIDICAS
@@ -89,7 +93,7 @@ function getCotizacionesNaturalEstado(estado) {
   $.ajax({
     type: "POST",
     url: `http://localhost/katariPrice/listado/listarCotizacionesEstadoNatural`,
-    data: {estado},
+    data: { estado },
     success: function (response) {
       let data = JSON.parse(response);
       let html = "";
@@ -107,14 +111,14 @@ function getCotizacionesNaturalEstado(estado) {
       });
       $("#tbody-cotizaciones-natural").html(html);
     },
-    error: function (error) {},
+    error: function (error) { },
   });
 }
 function getCotizacionesJuridicaEstado(estado) {
   $.ajax({
     type: "POST",
     url: `http://localhost/katariPrice/listado/listarCotizacionesEstadoJuridica`,
-    data: {estado},
+    data: { estado },
     success: function (response) {
       let data = JSON.parse(response);
       let html = "";
@@ -132,7 +136,7 @@ function getCotizacionesJuridicaEstado(estado) {
       });
       $("#tbody-cotizaciones-juridica").html(html);
     },
-    error: function (error) {},
+    error: function (error) { },
   });
 }
 // COTIZACIONES SEPARAS DE NATURALES Y JURIDICAS----------------
@@ -153,9 +157,9 @@ $(document).ready(() => {
   $("#estado-proyect").change(function () {
     let estado = $(this).val();
     let tipoPersona = $("#tipo-persona-proyect").val();
-    if(tipoPersona == "naturales-proyect"){
+    if (tipoPersona == "naturales-proyect") {
       getProyectosNaturalEstado(estado);
-    }else if(tipoPersona == "juridicas-proyect"){
+    } else if (tipoPersona == "juridicas-proyect") {
       getProyectosJuridicaEstado(estado);
     }
   });
@@ -183,9 +187,10 @@ function getProyectosNatural() {
                 </tr>`;
       });
       $("#tbody-proyectos-natural").html(html);
+      initPaginador(5, "tbody-proyectos-natural", "proyectos-natural-paginacion")
     },
     error: function (error) {
-      console.log("error:"+error);
+      console.log("error:" + error);
     },
   });
 }
@@ -212,9 +217,10 @@ function getProyectosJuridica() {
                 </tr>`;
       });
       $("#tbody-proyectos-juridica").html(html);
+      initPaginador(5, "tbody-proyectos-juridica", "proyectos-juridica-paginacion")
     },
     error: function (error) {
-      console.log("error:"+error);
+      console.log("error:" + error);
     },
   });
 }
@@ -222,7 +228,7 @@ function getProyectosNaturalEstado(estado) {
   $.ajax({
     type: "POST",
     url: `http://localhost/katariPrice/listado/listarProyectosNaturalEstado`,
-    data: {estado},
+    data: { estado },
     success: function (response) {
       let data = JSON.parse(response);
       let html = "";
@@ -244,7 +250,7 @@ function getProyectosNaturalEstado(estado) {
       $("#tbody-proyectos-natural").html(html);
     },
     error: function (error) {
-      console.log("error:"+error);
+      console.log("error:" + error);
     },
   });
 }
@@ -252,7 +258,7 @@ function getProyectosJuridicaEstado(estado) {
   $.ajax({
     type: "POST",
     url: `http://localhost/katariPrice/listado/listarProyectosJuridicaEstado`,
-    data: {estado},
+    data: { estado },
     success: function (response) {
       let data = JSON.parse(response);
       let html = "";
@@ -274,7 +280,7 @@ function getProyectosJuridicaEstado(estado) {
       $("#tbody-proyectos-juridica").html(html);
     },
     error: function (error) {
-      console.log("error:"+error);
+      console.log("error:" + error);
     },
   });
 }
