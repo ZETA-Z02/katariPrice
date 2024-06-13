@@ -2,7 +2,9 @@
 <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/Assets/css/jpaginate.css">
 <div class="grid-container full margin-1">
   <div class="cell large-3">
-    <h2>Listas Disponibles</h2>
+    <h2 class="text-center">Listado de Cotizaciones y Proyectos</h2>
+    <hr>
+    <label class="lead" for="lista">Seleccione una lista: </label>
     <select name="servicio" id="lista">
       <option value="cotizaciones">Cotizaciones</option>
       <option value="proyectos">Proyectos</option>
@@ -10,17 +12,20 @@
   </div>
   <!-- TABLA COTIZACIONES -->
   <div class="grid-x callout grid-margin-x tabla" id="tabla-cotizaciones">
-    <div class="cell">
-      <h3>Cotizaciones registradas</h3>
-    </div>
+    <h class="cell">
+      <h3 class="text-center">Cotizaciones registradas</h3>
+      <hr>
+    </h>
     <div class="cell grid-x grid-margin-x">
       <div class="cell large-6">
+        <label class="lead" for="tipo-persona">Elija el tipo de Persona:</label>
         <select name="tipo-persona" id="tipo-persona">
           <option value="naturales">Naturales</option>
           <option value="juridicas">Juridicas</option>
         </select>
       </div>
       <div class="cell large-6">
+      <label class="lead" for="estado">Elija el estado que busca:</label>
         <select name="estado" id="estado">
           <option value="todo">Todo</option>
           <option value="espera">Espera</option>
@@ -75,16 +80,19 @@
   <!-- TABLA PROYECTOS -->
   <div class="grid-x callout grid-margin-x tabla" id="tabla-proyectos">
     <div class="cell">
-      <h3>Proyectos registrados</h3>
+      <h3 class="text-center">Proyectos registrados</h3>
+      <hr>
     </div>
     <div class="cell grid-x grid-margin-x">
       <div class="cell large-6">
+      <label class="lead" for="tipo-persona-proyect">Elija el tipo de Persona:</label>
         <select name="tipo-persona-proyect" id="tipo-persona-proyect">
           <option value="naturales-proyect">Naturales</option>
           <option value="juridicas-proyect">Juridicas</option>
         </select>
       </div>
       <div class="cell large-6">
+      <label class="lead" for="estado-proyect">Elija el estado que busca:</label>
         <select name="estado-proyect" id="estado-proyect">
           <option value="todo">Todo</option>
           <option value="proceso">Proceso</option>

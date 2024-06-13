@@ -347,16 +347,16 @@
         <h4>Ingrese datos de la persona Natural</h4>
       </div>
       <label for="" class="cell large-3">
+        DNI:
+        <input type="text" name="dni" id="nat-dni">
+      </label>
+      <label for="" class="cell large-3">
         Nombre:
         <input type="text" name="nombre" id="nat-nombre">
       </label>
       <label for="" class="cell large-3">
         Apellidos:
         <input type="text" name="apellidos" id="nat-apellidos">
-      </label>
-      <label for="" class="cell large-3">
-        DNI:
-        <input type="text" name="dni" id="nat-dni">
       </label>
       <label for="" class="cell large-3">
         Sexo:
@@ -395,6 +395,10 @@
         <h4>Ingrese datos de la persona Juridico</h4>
       </div>
       <label for="" class="cell large-3">
+        RUC:
+        <input type="text" name="ruc" id="jur-ruc">
+      </label>
+      <label for="" class="cell large-3">
         Razon Social:
         <input type="text" name="razonsocial" id="jur-razonsocial">
       </label>
@@ -411,16 +415,12 @@
         <input type="text" name="web">
       </label>
       <label for="" class="cell large-3">
-        RUC:
-        <input type="text" name="ruc" id="jur-ruc">
-      </label>
-      <label for="" class="cell large-3">
         Rubro:
         <input type="text" name="rubro" id="jur-rubro">
       </label>
       <label for="" class="cell large-3">
         Direccion:
-        <input type="text" name="direccion">
+        <input type="text" name="direccion" id="jur-direccion">
       </label>
       <div class="cell large-12 text-center">
         <button class="button" type="submit">guardar</button>

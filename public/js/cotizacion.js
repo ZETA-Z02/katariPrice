@@ -19,7 +19,12 @@ $(document).ready(function () {
     var opcionSeleccionada = $(this).val();
     // Muestra el div correspondiente a la opción seleccionada
     $(
-      "#contenido-" + opcionSeleccionada + ",#contenido1-" + opcionSeleccionada + ",#contenido2-" + opcionSeleccionada
+      "#contenido-" +
+        opcionSeleccionada +
+        ",#contenido1-" +
+        opcionSeleccionada +
+        ",#contenido2-" +
+        opcionSeleccionada
     ).show();
   });
   // SELECT PARA QUE APAREZCA EL FORMULARIO END
@@ -113,7 +118,7 @@ $(document).ready(function () {
     } else if (servicio == "software") {
       calcularSoftware();
     } else if (servicio == "redes") {
-      calcularRedes()
+      calcularRedes();
     } else {
       console.log("ninguna calculadora o ERROR GRAVE");
     }
@@ -142,14 +147,14 @@ function tablaNatural() {
                 <td>${element.dni}</td>
                 <td>${element.ciudad}</td>
                 <td>
-                  <button class="seleccionar-natural">Seleccionar</button>
+                  <button class="button success seleccionar-natural">Seleccionar</button>
                 </td>
               </tr>
           `;
       });
       $("#datos-natural-table").html(html);
       seleccionarNatural(response);
-      initPaginador(5, "datos-natural-table", "natural-paginacion")
+      initPaginador(5, "datos-natural-table", "natural-paginacion");
     },
     error: function (error) {
       console.log("ERROR EN LA PETICION: " + error);
@@ -173,14 +178,14 @@ function tablaJuridica() {
                 <td>${element.ruc}</td>
                 <td>${element.telefono}</td>
                 <td>
-                  <button class="seleccionar-juridica">Seleccionar</button>
+                  <button class="button success seleccionar-juridica">Seleccionar</button>
                 </td>
               </tr>
           `;
       });
       $("#datos-juridica-table").html(html);
       seleccionarJuridica(response);
-      initPaginador(5, "datos-juridica-table", "juridica-paginacion")
+      initPaginador(5, "datos-juridica-table", "juridica-paginacion");
     },
     error: function (error) {
       console.log("ERROR EN LA PETICION: " + error);
@@ -329,7 +334,8 @@ function seleccionarJuridica(data) {
 // *-*-*-*-*-*-*-FUNCIONES CALCULADORA ESTADISTICA-*-*-*-*-*-*-
 function calcularEstadistica() {
   getCostosEstadistica();
-  $("#nivel-estadistica,#dias,#cantidad,#precio").on("change", function () {
+  // precio MODIFICAR
+  $("#nivel-estadistica,#dias,#cantidad").on("change", function () {
     // Obtencion de los datos y verificacion si estan vacios
     let costo_nivel =
       $("#nivel-estadistica").val() == ""
@@ -555,7 +561,7 @@ function getAplicacion() {
       });
       $("#aplicacion").html(html);
     },
-    error: function (error) { },
+    error: function (error) {},
   });
 }
 function getServicio() {
@@ -579,12 +585,12 @@ function getServicio() {
 // *-*-*-*-*-*-*-FUNCIONES CALCULADORA DE REDES -*-*-*-*-*-*-
 function calcularRedes() {
   getRedesServicios();
-  $("#redes,#dias,#cantidad,#precio").on("change", function () {
+  $("#redes,#dias,#cantidad").on("change", function () {
     let redes = parseFloat($("#redes").val());
     let dias = $("#dias").val() == "" ? 0 : parseFloat($("#dias").val());
     let cantidad =
       $("#cantidad").val() == "" ? 1 : parseFloat($("#cantidad").val());
-    let total = (redes + (dias * 25) + cantidad).toFixed(2);
+    let total = (redes + dias * 25 + cantidad).toFixed(2);
     $("#precio").val(total);
   });
 }
@@ -722,7 +728,6 @@ function postSoftware() {
       confirmation(0, "Falta rellenar el formulario");
     },
   });
-
 }
 function postRedes() {
   var id = "";
@@ -748,7 +753,7 @@ function postRedes() {
   let fecha = $("#fecha").val();
   let descripcion = $("#miTextarea").val();
   let fileInput = document.getElementById("file-upload");
-  let file = fileInput.files[0];  // Obtén el primer archivo seleccionado
+  let file = fileInput.files[0]; // Obtén el primer archivo seleccionado
   // Crear un objeto FormData y agregar todos los datos del formulario
   let formData = new FormData();
   formData.append("nombre", nombre);
@@ -767,8 +772,8 @@ function postRedes() {
     type: "POST",
     url: "http://localhost/katariPrice/cotizacion/postRedes",
     data: formData,
-    processData: false,  // No procesar los datos, es decir, enviar tal cual
-    contentType: false,  // No establecer ningún tipo de contenido
+    processData: false, // No procesar los datos, es decir, enviar tal cual
+    contentType: false, // No establecer ningún tipo de contenido
     success: function (response) {
       //console.log(response);
       confirmation(1, "Cotizacion de Redes Guardada!");
@@ -790,9 +795,67 @@ $(document).ready(function () {
   numberLeght("#nat-dni,#natural-dni", 8);
   numberLeght("#nat-telefono,#jur-telefono", 9);
   numberFloat("#precio,#cost-mantenimiento");
-  justStrings("#nat-nombre,#nat-apellidos,#nat-ciudad,#jur-razonsocial,#jur-rubro,#natural-nombre,#juridica-razonsocial");
+  justStrings(
+    "#nat-nombre,#nat-apellidos,#nat-ciudad,#jur-razonsocial,#jur-rubro,#natural-nombre,#juridica-razonsocial"
+  );
   numberLeght("#jur-ruc,#juridica-ruc", 11);
-
 });
 // ++++++++++++VALIDA LOS INPUTS PARA QUE NO INTRODUZCA DATOS ERRONEOS++++++++++++++++
-
+$(document).ready(function () {
+  dni();
+  ruc();
+});
+function dni() {
+  var token = "apis-token-8574.bPsef4wHOYjVwA7bFoDMZqLLrNrAMKiY";
+  $("#nat-dni").on("keyup", function () {
+    var dni = $("#nat-dni").val();
+    if (dni.length == 8) {
+      $.ajax({
+        url: "http://localhost/katariPrice/actions/dni",
+        type: "POST",
+        data: { dni: dni },
+        success: function (response) {
+          let data = JSON.parse(response);
+          if (data == 1) {
+            alert("El DNI debe tener 8 dígitos");
+          } else {
+            console.log(data);
+            $("#nat-nombre").val(data.nombres);
+            $("#nat-apellidos").val(
+              data.apellidoPaterno + " " + data.apellidoMaterno
+            );
+          }
+        },
+        error: function (xhr, status, error) {
+          console.log(error + "->No se pudo hacer la solicitud a la API");
+        },
+      });
+    } else {
+      console.log("no hay dni");
+    }
+  });
+}
+function ruc() {
+  $("#jur-ruc").on("keyup", function () {
+    var ruc = $("#jur-ruc").val();
+    if (ruc.length == 11) {
+      $.ajax({
+        type: "POST",
+        url: "http://localhost/katariPrice/actions/ruc",
+        data: { ruc: ruc },
+        dataType: "json",
+        success: function (data) {
+          if (data == 1) {
+            alert("El RUC tiene que tener 11 dígitos");
+          } else {
+            console.log(data);
+            $("#jur-razonsocial").val(data.nombre);
+            $("#jur-direccion").val(data.direccion);
+          }
+        },
+      });
+    } else {
+      console.log("no hay ruc");
+    }
+  });
+}
