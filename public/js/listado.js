@@ -53,6 +53,7 @@ function getCotizacionesNatural() {
                     <td>${element.estado}</td>
                     <td>${element.fechaLimite}</td>
                     <td><a href="http://localhost/katariPrice/listado/cotizacionNaturalDetalle/${element.idcotizacion}" class="button">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/cotizacion/proforma/${element.idcotizacion}" class="button" target="_blank">Imprimir</a></td>
                 </tr>`;
       });
       $("#tbody-cotizaciones-natural").html(html);
@@ -80,6 +81,7 @@ function getCotizacionesJuridica() {
                     <td>${element.estado}</td>
                     <td>${element.fechaLimite}</td>
                     <td><a href="http://localhost/katariPrice/listado/cotizacionJuridicaDetalle/${element.idcotizacion}" class="button">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/cotizacion/proforma/${element.idcotizacion}" class="button" target="_blank">Imprimir</a></td>
                 </tr>`;
       });
       $("#tbody-cotizaciones-juridica").html(html);
@@ -107,6 +109,7 @@ function getCotizacionesNaturalEstado(estado) {
                     <td>${element.estado}</td>
                     <td>${element.fechaLimite}</td>
                     <td><a href="http://localhost/katariPrice/listado/cotizacionNaturalDetalle/${element.idcotizacion}" class="button">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/cotizacion/proforma/${element.idcotizacion}" class="button" target="_blank">Imprimir</a></td>
                 </tr>`;
       });
       $("#tbody-cotizaciones-natural").html(html);
@@ -132,6 +135,7 @@ function getCotizacionesJuridicaEstado(estado) {
                     <td>${element.estado}</td>
                     <td>${element.fechaLimite}</td>
                     <td><a href="http://localhost/katariPrice/listado/cotizacionJuridicaDetalle/${element.idcotizacion}" class="button">detalles</a></td>
+                    <td><a href="http://localhost/katariPrice/cotizacion/proforma/${element.idcotizacion}" class="button" target="_blank">Imprimir</a></td>
                 </tr>`;
       });
       $("#tbody-cotizaciones-juridica").html(html);

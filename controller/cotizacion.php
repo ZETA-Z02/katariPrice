@@ -1,5 +1,10 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+// Cargar Composer's autoloader
+//require '../vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 class Cotizacion extends Controller
 {
 
@@ -170,13 +175,22 @@ class Cotizacion extends Controller
 
 		if ($tipoCliente == 'natural') {
 			if ($this->model->PostEstadisticaNatural($id, $idservicio, $idcosto, $idpersonal, $dias, $precio, $cantidad, $descripcion, $estado, $fecha)) {
+				// echo "insercion natural con exito-modal de exito";
+				$idcotizacion = $this->model->conn->conn->insert_id;
+				$this->proforma([$idcotizacion],true);
+				$data = $this->model->Proforma($idcotizacion);
+				$this->email($data['email'],$idcotizacion);
 				echo "insercion natural con exito-modal de exito";
 			} else {
 				echo "ERROR EN LA INSERCION";
 			}
 		} else if ($tipoCliente == 'juridica') {
 			if ($this->model->PostEstadisticaJuridica($id, $idservicio, $idcosto, $idpersonal, $dias, $precio, $cantidad, $descripcion, $estado, $fecha)) {
-				echo "insercion juridica con exito-modal de exito";
+				// echo "insercion juridica con exito-modal de exito";
+				$idcotizacion = $this->model->conn->conn->insert_id;
+				$this->proforma([$idcotizacion],true);
+				$data = $this->model->Proforma($idcotizacion);
+				$this->email($data['email'],$idcotizacion);	
 			} else {
 				echo "ERROR EN LA INSERCION";
 			}
@@ -224,13 +238,21 @@ class Cotizacion extends Controller
 		$estado = "espera";
 		if ($tipoCliente == 'natural') {
 			if ($this->model->PostSoftwareNatural($id,$servicio,$idcosto,$idpersonal,$dias,$precio,$cantidad,$descripcion,$estado,$fecha,$idcalcSoftware)) {
-				echo "insercion natural con exito-modal de exito";
+				// echo "insercion natural con exito-modal de exito";
+				$idcotizacion = $this->model->conn->conn->insert_id;
+				$this->proforma([$idcotizacion],true);
+				$data = $this->model->Proforma($idcotizacion);
+				$this->email($data['email'],$idcotizacion);
 			} else {
 				echo "ERROR EN LA INSERCION";
 			}
 		} else if ($tipoCliente == 'juridica') {
 			if ($this->model->PostSoftwareJuridica($id,$servicio,$idcosto,$idpersonal,$dias,$precio,$cantidad,$descripcion,$estado,$fecha,$idcalcSoftware)) {
-				echo "insercion juridica con exito-modal de exito";
+				// echo "insercion juridica con exito-modal de exito";
+				$idcotizacion = $this->model->conn->conn->insert_id;
+				$this->proforma([$idcotizacion],true);
+				$data = $this->model->Proforma($idcotizacion);
+				$this->email($data['email'],$idcotizacion);
 			} else {
 				echo "ERROR EN LA INSERCION";
 			}
@@ -257,17 +279,247 @@ class Cotizacion extends Controller
 		}
 		if ($tipoCliente == 'natural') {
 			if ($this->model->PostRedesNatural($id,$servicio,$idcosto,$idpersonal,$dias,$precio,$cantidad,$descripcion,$estado,$fecha,$res)) {
-				echo "insercion redes natural con exito->modal de exito";
+				// echo "insercion redes natural con exito->modal de exito";
+				$idcotizacion = $this->model->conn->conn->insert_id;
+				$this->proforma([$idcotizacion],true);
+				$data = $this->model->Proforma($idcotizacion);
+				$this->email($data['email'],$idcotizacion);
 			} else {
 				echo "ERROR EN LA INSERCION REDES";
 			}
 		} else if ($tipoCliente == 'juridica') {
 			if ($this->model->PostRedesJuridica($id,$servicio,$idcosto,$idpersonal,$dias,$precio,$cantidad,$descripcion,$estado,$fecha,$res)) {
-				echo "insercion redes juridica con exito->modal de exito";
+				// echo "insercion redes juridica con exito->modal de exito";
+				$idcotizacion = $this->model->conn->conn->insert_id;
+				$this->proforma([$idcotizacion],true);
+				$data = $this->model->Proforma($idcotizacion);
+				$this->email($data['email'],$idcotizacion);
 			} else {
 				echo "ERROR EN LA INSERCION REDES";
 			}
 		}
 	}
+	public function email($email,$id=null)
+    {
+        // Instancia de PHPMailer
+        $mail = new PHPMailer(true);
+
+        try {
+            // Configuración del servidor SMTP
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';           // Servidor SMTP de Gmail
+            $mail->SMTPAuth = true;
+            $mail->Username = 'jersson.z032@gmail.com';
+            // Tu correo de Gmail ===>>>  fxws idjg pqjo hmjd
+            $mail->Password = 'fxws idjg pqjo hmjd';   // Tu contraseña de Gmail o contraseña de aplicación
+            $mail->SMTPSecure = 'tls';                   // Encriptación TLS
+            $mail->Port = 587;                           // Puerto TCP
+
+            // Remitente y destinatario
+            $mail->setFrom('jersson.z032@gmail.com', 'jersson');
+            $mail->addAddress($email, 'dota2'); // Añadir destinatario
+
+            // Adjuntar archivos
+            if($id!=null){
+                $mail->addAttachment('/var/www/html/katariPrice/dumps/pdf/proforma:'.$id.'.pdf');
+            }
+            // Contenido del correo
+            $mail->isHTML(true);                         // Configurar el correo en formato HTML
+            $mail->Subject = 'Asunto del correo';
+            $mail->Body = 'Cotizacion Solicitada';
+            // $mail->AltBody = 'Este es el cuerpo del correo en texto plano para clientes de correo que no soportan HTML';
+
+            $mail->send();
+            echo 'El mensaje ha sido enviado';
+        } catch (Exception $e) {
+            echo "El mensaje no pudo ser enviado. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+    public function proforma($nparam=null,$save=null)
+    {
+
+        $id = $nparam[0];
+        $data = $this->model->Proforma($id);
+        $fecha = date('d/m/Y H:i');
+        $identificador = strlen($data['identificador']) == 8 ? 'DNI: ' . $data['identificador'] : 'RUC: ' . $data['identificador'];
+        $igvPorcentaje = 0.18; // 18% IGV
+        // Calcular el IGV
+        $subtotal = $data['precio'] * $igvPorcentaje;
+
+        # Incluyendo librerias necesarias #
+        require __DIR__ . "/pdf.php";
+        $pdf = new PDF_Code128('P', 'mm', 'Letter');
+        $pdf->SetMargins(17, 17, 17);
+        $pdf->AddPage();
+
+        # Logo de la empresa formato png #
+        $pdf->Image(constant('URL') . 'controller/img/icon.png', 165, 12, 35, 35, 'PNG');
+
+        # Encabezado y datos de la empresa #
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->SetTextColor(39, 39, 51);
+        $pdf->Cell(0, 5, iconv("UTF-8", "ISO-8859-1", strtoupper("COTIZACION")), 0, 0, 'C');
+        $pdf->Ln(9);
+        $pdf->SetTextColor(32, 100, 210);
+        $pdf->Cell(150, 15, iconv("UTF-8", "ISO-8859-1", strtoupper("KATARI")), 0, 0, 'L');
+
+        $pdf->Ln(9);
+
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->SetTextColor(39, 39, 51);
+        $pdf->Cell(150, 9, iconv("UTF-8", "ISO-8859-1", "RUC: 20606248092"), 0, 0, 'L');
+
+        $pdf->Ln(5);
+
+        $pdf->Cell(150, 9, iconv("UTF-8", "ISO-8859-1", "Direccion: Barrio Porteño"), 0, 0, 'L');
+
+        $pdf->Ln(5);
+
+        $pdf->Cell(150, 9, iconv("UTF-8", "ISO-8859-1", "Teléfono: 935 017 466"), 0, 0, 'L');
+
+        $pdf->Ln(5);
+
+        $pdf->Cell(150, 9, iconv("UTF-8", "ISO-8859-1", "Email: edagar@katari.com"), 0, 0, 'L');
+
+        $pdf->Ln(10);
+
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->Cell(30, 7, iconv("UTF-8", "ISO-8859-1", "Fecha de emisión:"), 0, 0);
+        $pdf->SetTextColor(97, 97, 97);
+        $pdf->Cell(116, 7, iconv("UTF-8", "ISO-8859-1", $fecha), 0, 0, 'L');
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetTextColor(39, 39, 51);
+        $pdf->Cell(35, 7, iconv("UTF-8", "ISO-8859-1", strtoupper("Boleta Nro.")), 0, 0, 'C');
+
+        $pdf->Ln(7);
+
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->Cell(12, 7, iconv("UTF-8", "ISO-8859-1", "Cajero:"), 0, 0, 'L');
+        $pdf->SetTextColor(97, 97, 97);
+        $pdf->Cell(134, 7, iconv("UTF-8", "ISO-8859-1", $_SESSION['username']), 0, 0, 'L');
+        $pdf->SetFont('Arial', 'B', 10);
+        $pdf->SetTextColor(97, 97, 97);
+        $pdf->Cell(35, 7, iconv("UTF-8", "ISO-8859-1", strtoupper($data['idcotizacion'])), 0, 0, 'C');
+
+        $pdf->Ln(10);
+
+        $pdf->SetFont('Arial', '', 10);
+        $pdf->SetTextColor(39, 39, 51);
+        $pdf->Cell(13, 7, iconv("UTF-8", "ISO-8859-1", "Cliente:"), 0, 0);
+        $pdf->SetTextColor(97, 97, 97);
+        $pdf->Cell(60, 7, iconv("UTF-8", "ISO-8859-1", $data['nombres']), 0, 0, 'L');
+        $pdf->Ln(10);
+        $pdf->SetTextColor(39, 39, 51);
+        $pdf->Cell(8, 7, iconv("UTF-8", "ISO-8859-1", $identificador), 0, 0, 'L');
+        $pdf->SetTextColor(97, 97, 97);
+        $pdf->Cell(60, 7, iconv("UTF-8", "ISO-8859-1", "            "), 0, 0, 'L');
+        $pdf->SetTextColor(39, 39, 51);
+        $pdf->Cell(7, 7, iconv("UTF-8", "ISO-8859-1", "Tel:" . $data['telefono']), 0, 0, 'L');
+        $pdf->SetTextColor(97, 97, 97);
+        $pdf->Cell(35, 7, iconv("UTF-8", "ISO-8859-1", ""), 0, 0);
+        $pdf->SetTextColor(39, 39, 51);
+
+
+        $pdf->Ln(9);
+
+        # Tabla de productos #
+        $pdf->SetFont('Arial', '', 8);
+        $pdf->SetFillColor(23, 83, 201);
+        $pdf->SetDrawColor(23, 83, 201);
+        $pdf->SetTextColor(255, 255, 255);
+        $pdf->Cell(90, 8, iconv("UTF-8", "ISO-8859-1", "Descripción"), 1, 0, 'C', true);
+        $pdf->Cell(15, 8, iconv("UTF-8", "ISO-8859-1", "Cant."), 1, 0, 'C', true);
+        $pdf->Cell(15, 8, iconv("UTF-8", "ISO-8859-1", "Servicio"), 1, 0, 'C', true);
+        $pdf->Cell(25, 8, iconv("UTF-8", "ISO-8859-1", "Precio"), 1, 0, 'C', true);
+        $pdf->Cell(19, 8, iconv("UTF-8", "ISO-8859-1", "Desc."), 1, 0, 'C', true);
+        $pdf->Cell(32, 8, iconv("UTF-8", "ISO-8859-1", "Subtotal"), 1, 0, 'C', true);
+
+        $pdf->Ln(8);
+
+
+        $pdf->SetTextColor(39, 39, 51);
+        /*----------  Detalles de la tabla  ----------*/
+        $pdf->Cell(90, 7, iconv("UTF-8", "ISO-8859-1", wordwrap($data['descripcion'])), 'L', 0, 'C');
+        $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", $data['cantidad']), 'L', 0, 'C');
+        $pdf->Cell(25, 7, iconv("UTF-8", "ISO-8859-1", $data['tiposervicio']), 'L', 0, 'C');
+        $pdf->Cell(19, 7, iconv("UTF-8", "ISO-8859-1", $data['precio']), 'L', 0, 'C');
+        $pdf->Cell(19, 7, iconv("UTF-8", "ISO-8859-1", '00 S/.'), 'L', 0, 'C');
+        $pdf->Cell(32, 7, iconv("UTF-8", "ISO-8859-1", $subtotal), 'LR', 0, 'C');
+
+        $pdf->Ln(7);
+        /*----------  Fin Detalles de la tabla  ----------*/
+
+        // Línea de cierre
+        $pdf->Cell(90, 0, '', 'T'); // Línea de cierre para Descripción
+        $pdf->Cell(15, 0, '', 'T'); // Línea de cierre para Cantidad
+        $pdf->Cell(25, 0, '', 'T'); // Línea de cierre para Servicio
+        $pdf->Cell(19, 0, '', 'T'); // Línea de cierre para Precio
+        $pdf->Cell(19, 0, '', 'T'); // Línea de cierre para Desc.
+        $pdf->Cell(32, 0, '', 'T'); // Línea de cierre para Subtotal
+
+        $pdf->Ln(9);
+
+        $pdf->SetFont('Arial', 'B', 9);
+
+        // # Impuestos & totales #
+        // $pdf->Cell(100, 7, iconv("UTF-8", "ISO-8859-1", ''), 'T', 0, 'C');
+        // $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", ''), 'T', 0, 'C');
+        // $pdf->Cell(32, 7, iconv("UTF-8", "ISO-8859-1", "SUBTOTAL"), 'T', 0, 'C');
+        // $pdf->Cell(34, 7, iconv("UTF-8", "ISO-8859-1", "+00 S/"), 'T', 0, 'C');
+
+        // $pdf->Ln(7);
+
+        // $pdf->Cell(100, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(32, 7, iconv("UTF-8", "ISO-8859-1", "IVA (18%)"), '', 0, 'C');
+        // $pdf->Cell(34, 7, iconv("UTF-8", "ISO-8859-1", "+ 00 S/"), '', 0, 'C');
+
+        // $pdf->Ln(7);
+
+        // $pdf->Cell(100, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+
+
+        // $pdf->Cell(32, 7, iconv("UTF-8", "ISO-8859-1", "TOTAL A PAGAR"), 'T', 0, 'C');
+        // $pdf->Cell(34, 7, iconv("UTF-8", "ISO-8859-1", "00 S/"), 'T', 0, 'C');
+
+        // $pdf->Ln(7);
+
+        // $pdf->Cell(100, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(32, 7, iconv("UTF-8", "ISO-8859-1", "TOTAL PAGADO"), '', 0, 'C');
+        // $pdf->Cell(34, 7, iconv("UTF-8", "ISO-8859-1", "00 S/"), '', 0, 'C');
+
+        // $pdf->Ln(7);
+
+        // $pdf->Cell(100, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(32, 7, iconv("UTF-8", "ISO-8859-1", "CAMBIO"), '', 0, 'C');
+        // $pdf->Cell(34, 7, iconv("UTF-8", "ISO-8859-1", "00 S/"), '', 0, 'C');
+
+        // $pdf->Ln(7);
+
+        // $pdf->Cell(100, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(15, 7, iconv("UTF-8", "ISO-8859-1", ''), '', 0, 'C');
+        // $pdf->Cell(32, 7, iconv("UTF-8", "ISO-8859-1", "USTED AHORRA"), '', 0, 'C');
+        // $pdf->Cell(34, 7, iconv("UTF-8", "ISO-8859-1", "00 S/"), '', 0, 'C');
+
+        // $pdf->Ln(12);
+
+        // $pdf->SetFont('Arial', '', 9);
+
+        // $pdf->SetTextColor(39, 39, 51);
+        // $pdf->MultiCell(0, 9, iconv("UTF-8", "ISO-8859-1", "    "), 0, 'C', false);
+
+        // $pdf->Ln(9);
+
+        # Nombre del archivo PDF #
+        if($save){
+            $pdf->Output('F', '/var/www/html/katariPrice/dumps/pdf/proforma:'.$id.'.pdf');
+        }else{
+            $pdf->Output("I", "reporte.pdf", true);
+        }
+        
+    }
 		
 }

@@ -27,13 +27,6 @@ class Clientes extends Controller
 		}
 		$jsonstring = json_encode($json);
 		echo $jsonstring;
-		// if (!$data){
-		// 	die('fallo la conexion');
-		// }else{
-		// 	echo "Si llega";
-		// 	echo var_dump($data);
-		// 	$this->view->Render('clientes/detallejur');
-		// }
 	}
 	// muestra a la perosa juridica
 	public function verJuridica(){
@@ -137,5 +130,30 @@ class Clientes extends Controller
 		echo $jsonstring;
 	}
 
+	//JURIDICA
+	function detallesJuridica($nparam = null)
+	{
+		$id = $nparam[0];
+		$this->view->data = $this->model->GetJuridicaId($id);
+		$this->view->Render('clientes/detallesJuridica');
+	}
+	public function updateJuridica(){
+		$id = $_POST['idjuridica'];
+		$razonsocial = $_POST['razonsocial'];
+		$rubro = $_POST['rubro'];
+		$ruc = $_POST['ruc'];
+		$telefono = $_POST['telefono'];
+		$email = $_POST['email'];
+		$web = $_POST['web'];
+		$direccion = $_POST['direccion'];
+		$feUpdate = date('Y-m-d');
+
+		$result=$this->model->UpdateJuridica($razonsocial,$telefono,$email,$web,$ruc,$rubro,$direccion,$feUpdate,$id);
+		if ($result) {
+        	echo "EXITO";
+    	} else {
+        	echo "ERROR";
+    	}
+	}
 
 }

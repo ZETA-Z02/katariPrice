@@ -13,7 +13,7 @@
   </div>
   <!-- BOTONES NATURAL Y JURIDICA-POP UPS -->
   <!-- FORMULARIO PRINCIPAL-->
-  <div class="grid-x callout grid-margin-x">
+  <div class="grid-x callout grid-margin-x" id="main-form">
     <!-- DATOS PERSONA NATURAL -  SE MUETRA CUANDO SE PRESIONA EL BOTON PERSONA NATURAL -->
     <div class="cell large-12" id="datos-natural">
       <h4>Personal Natural:</h4>
@@ -214,7 +214,7 @@
     <div class="cell grid-x large-up-2 grid-margin-x text-right grid-margin-y">
       <span class="cell grid-x">
         <label for="" class="large-4 lead">Tipo Cable : </label>
-        <select class="large-8" name="" id="dificultad"></select>
+        <input type="text">
       </span>
       <span class="cell grid-x">
         <label for="" class="large-4 lead">Coste por Punto : </label>

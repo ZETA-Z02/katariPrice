@@ -2,7 +2,7 @@ $(document).ready(function () {
   $("#natural-modal").show();
   $("#juridica-modal").hide();
   // $(".contenido-clientes").show();
-
+  postPersonal()
   tablaNatural();
   tablaJuridica();
   // Manejador de clic para el botón "Natural"
@@ -175,6 +175,7 @@ $(document).ready(function () {
                 <td>${task.email}</td>
                 <td>${task.rubro}</td>
                 <td>${task.web}</td>
+                <td><a href="http://localhost/katariPrice/clientes/detallesJuridica/${task.idjuridica}" class="task-edit success button">Detalles</a></td>
               </tr>
           `;
         });
@@ -198,3 +199,23 @@ $(document).ready(function () {
     buscar("natural");
   });
 });
+
+function postPersonal() {
+  $("#update-juridica").on("submit", function (event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    $.ajax({
+      url: $(this).attr("action"),
+      type: "POST",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        confirmation(1, "Actualizado Correctamente!",2);
+      },
+      error: function (error) {
+        confirmation(0, "ERROR AL CREAR");
+      },
+    });
+  });
+}

@@ -46,7 +46,7 @@
             <th>Precio</th>
             <th>estado</th>
             <th>Limite</th>
-            <th>Acciones</th>
+            <th class="text-center" colspan="2">acciones</th>
           </tr>
         </thead>
         <tbody id="tbody-cotizaciones-natural">
@@ -66,7 +66,7 @@
             <th>Precio</th>
             <th>estado</th>
             <th>Limite</th>
-            <th>Acciones</th>
+            <th class="text-center"colspan="2">acciones</th>
           </tr>
         </thead>
         <tbody id="tbody-cotizaciones-juridica">
@@ -114,7 +114,7 @@
             <th>pendiente</th>
             <th>Total</th>
             <th>Fecha Entrega</th>
-            <th>acciones</th>
+            <th colspan="2">acciones</th>
           </tr>
         </thead>
         <tbody id="tbody-proyectos-natural">

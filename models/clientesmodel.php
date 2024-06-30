@@ -37,7 +37,16 @@ class ClientesModel extends Model{
         $data = $this->conn->ConsultaSin($sql);
         return $data;
     }
-    
+    public function GetJuridicaId($id){
+        $sql = "SELECT * FROM perjuridica WHERE idjuridica = '$id';";
+        $res = $this->conn->ConsultaArray($sql);
+        return $res;
+    }
+    public function UpdateJuridica($razonsocial,$telefono,$email,$web,$ruc,$rubro,$direccion,$feUpdate,$idjuridica){
+        $sql = "UPDATE perjuridica SET `razonsocial` = '$razonsocial', `telefono` = '$telefono', `email` = '$email', `web` = '$web', `ruc` = '$ruc', `rubro` = '$rubro', `direccion` = '$direccion', `feUpdate` = '$feUpdate' WHERE (`idjuridica` = '$idjuridica');";
+        $res = $this->conn->ConsultaSin($sql);
+        return $res;
+    }
 }
 
 

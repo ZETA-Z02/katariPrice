@@ -1,5 +1,6 @@
 // BOTONES FUNCIONES- REGISTRAR Y GUARDA NATURAL Y JURIDICO-POP UPS--->> NO TOCAR -------------
 $(document).ready(function () {
+  $("#main-form").hide();
   // OCULTA LOS MODALES
   $("#natural-modal").hide();
   $("#juridica-modal").hide();
@@ -30,6 +31,7 @@ $(document).ready(function () {
   // SELECT PARA QUE APAREZCA EL FORMULARIO END
   // BOTONES NATURAL
   $("#natural-btn").click(function () {
+    $("#main-form").show();
     $("#idjuridica").val("");
     $("#juridica-modal").hide();
     $("#natural-modal").show();
@@ -40,6 +42,7 @@ $(document).ready(function () {
   // BOTON NATURAL END
   // BOTONES JURIDICO
   $("#juridica-btn").click(function () {
+    $("#main-form").show();
     $("#idnatural").val("");
     $("#natural-modal").hide();
     $("#juridica-modal").show();
@@ -213,7 +216,7 @@ function searchNatural() {
                     <td>${element.dni}</td>
                     <td>${element.ciudad}</td>
                     <td>
-                      <button class="seleccionar-natural">Seleccionar</button>
+                      <button class="button seleccionar-natural">Seleccionar</button>
                     </td>
                 </tr>`;
         });
@@ -247,7 +250,7 @@ function searchJuridica() {
                     <td>${element.ruc}</td>
                     <td>${element.telefono}</td>
                     <td>
-                        <button class="seleccionar-juridica">Seleccionar</button>
+                        <button class="button seleccionar-juridica">Seleccionar</button>
                     </td>
                 </tr>`;
         });
@@ -599,6 +602,7 @@ function getRedesServicios() {
     type: "GET",
     url: "http://localhost/katariPrice/cotizacion/getRedes",
     success: function (response) {
+      console.log(response)
       let data = JSON.parse(response);
       html = "";
       data.forEach((element) => {
@@ -667,7 +671,7 @@ function postEstadistica() {
     },
     success: function (response) {
       //console.log(response);
-      confirmation(1, "Cotizacion de Estadistica Guardada!");
+      confirmation(1, "Cotizacion de Estadistica Guardada!",1);
     },
     error: function (error) {
       //console.log("ERROR EN LA PETICION ESTADISTICA: " + error);
@@ -721,7 +725,7 @@ function postSoftware() {
     },
     success: function (response) {
       //console.log(response);
-      confirmation(1, "Cotizacion de Software Guardada!");
+      confirmation(1, "Cotizacion de Software Guardada!",1);
     },
     error: function (error) {
       //console.log("ERROR EN LA PETICION SOFTWARE: " + error);
@@ -776,7 +780,7 @@ function postRedes() {
     contentType: false, // No establecer ningún tipo de contenido
     success: function (response) {
       //console.log(response);
-      confirmation(1, "Cotizacion de Redes Guardada!");
+      confirmation(1, "Cotizacion de Redes Guardada!",1);
     },
     error: function (error) {
       //console.log("ERROR EN LA PETICION REDES: " + error);

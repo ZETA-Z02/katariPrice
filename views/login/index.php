@@ -17,29 +17,32 @@
 </head>
 
 <body>
-  <div class="grid-container">
+  <div class="grid-container container-login">
     <div class="grid-x margin-3 login-z shadow">
-      <div class="cell large-6 callout info-z">
+      <div class="cell large-6 info-z">
         <div class="padding-horizontal-2">
-          <h1>Katari-Software y desarrollo</h1>
+          <h1>Katari-Software y Desarrollo</h1>
           <p class="lead">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi facilis suscipit, voluptates deserunt
-            sapiente pariatur hic velit itaque voluptate! Non quod dolorem aperiam nulla neque labore. Blanditiis magni
-            sapiente repudiandae?
+            Sistema de cotizaciones, este sistema automatiza la cotizacion de Estadistica, Software y Redes.
+            Seguimiento de cotizaciones, proyectos y pagos.
+            <br />
+            Registro de personal, usuarios y clientes.
+            <br />
+            Seguimiento de proyectos y asignacion de personal.
           </p>
           <a href="" class="button">facebook</a>
           <a href="" class="button alert">Gmail</a>
         </div>
       </div>
-      <div class="cell large-6 callout formulario-z">
+      <div class="cell large-6 formulario-z">
         <div class="login">
           <div class="margin-1">
-            <h2>Login</h2>
+            <h1>Login</h1>
           </div>
           <form action="<?php echo constant('URL'); ?>login/logIn" method="POST">
-            <label for="usuario">Usuario</label>
+            <label for="usuario" class="texto-form">Usuario</label>
             <input type="text" name="usuario" id="usuario" value="zeta" required/>
-            <label for="password">Contraseña</label>
+            <label for="password" class="texto-form">Contraseña</label>
             <input type="password" name="password" id="password" value="zeta" required/>
             <input type="submit" value="Ingresar" class="button success" />
           </form>
@@ -50,5 +53,3 @@
 </body>
 
 </html>
-
-<?php require ('views/footer.php');?>

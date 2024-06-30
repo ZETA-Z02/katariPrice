@@ -33,7 +33,7 @@ $(document).ready(function () {
   $('.modal-confirmacion-global, .modal-error-global').css({ 'display': 'none' });
 })
 // CONFIRMACION ,,, 1=EXITO, 0=ERROR
-function confirmation(type, mensaje) {
+function confirmation(type, mensaje,reload = 0) {
   if (type == 1) {
     $('.modal-confirmacion-global').css({ 'display': 'flex' });
     $("#mensaje-modal").html(mensaje);
@@ -49,6 +49,14 @@ function confirmation(type, mensaje) {
   $("#btn-confirm,#btn-error").on("click", function () {
     $("#modal-confirmacion-global").fadeOut();
     $("#modal-error-global").fadeOut();
+    if(reload == 1){
+      window.location.href = 'http://localhost/katariPrice/listado';
+      //window.location.reload();
+    }
+    if(reload == 2){
+      window.location.href = 'http://localhost/katariPrice/clientes';
+      //window.location.reload();
+    }
     // $("#modal-confirmacion-global").hide();
     // $("#modal-error-global").hide();
   });

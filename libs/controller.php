@@ -22,11 +22,13 @@ class Controller
       $this->model = new $modelName();
     }
   }
-    // Los parametros son:
+
+  // Los parametros son
   //FILE=> el archivo subido
   //NOMBRE=> nombre del archivo, puede ser nombre del usuario o apellido lo que mejor convenga
   //ID=> un Identificador unico, Id de la base de datos o un numero especial
-  function File($file, $nombre, $identificador)
+  
+  public function File($file, $nombre, $identificador)
   {
       $temporal = $file['tmp_name'];
       $rutaCarpeta = "dumps/excel/Cot.:" . $nombre . $identificador;

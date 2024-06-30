@@ -88,6 +88,20 @@ class CotizacionModel extends Model{
         $res = $this->conn->ConsultaSin($sql);
         return $res;
     }
+    public function Proforma($id){
+        $sql = "SELECT co.idcotizacion,co.idnatural, co.idjuridica, co.descripcion,co.cantidad,co.precio,ser.tiposervicio,
+            COALESCE(concat(n.nombre,' ',n.apellidos), j.razonsocial) AS nombres,
+            COALESCE(n.telefono, j.telefono) AS telefono,
+            COALESCE(n.dni, j.ruc) AS identificador,
+            COALESCE(n.email, j.email) AS email
+            FROM cotizaciones co
+			JOIN tipo_servicio ser ON ser.idservicio = co.idservicio
+            LEFT JOIN pernatural n ON co.idnatural = n.idnatural
+            LEFT JOIN perjuridica j ON co.idjuridica = j.idjuridica
+            WHERE co.idcotizacion = '$id';";
+        $data = $this->conn->ConsultaArray($sql);
+        return $data;
+    }
 }
 
 

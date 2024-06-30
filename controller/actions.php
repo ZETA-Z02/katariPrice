@@ -1,5 +1,4 @@
 <?php
-
 class Actions extends Controller
 {
     function __construct()
@@ -53,4 +52,5 @@ class Actions extends Controller
         $consulta = file_get_contents('https://api.apis.net.pe/v1/ruc?numero=' . $ruc . '');
         echo $consulta;
     }
+
 }

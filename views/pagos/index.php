@@ -1,6 +1,6 @@
 <?php require('views/header.php'); ?>
 <link rel="stylesheet" href="<?php echo constant('URL') ?>public/assets/Assets/css/jpaginate.css">
-<div class="grid-container full margin-top-1">
+<div class="grid-container">
   <div class="grid-x">
     <h2>REGISTRO DE PAGOS POR PROYECTO</h2>
   </div>
