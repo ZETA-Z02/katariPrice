@@ -125,7 +125,10 @@
       <label for="file-upload" class="button margin-top-2">Subir Excel</label>
       <input type="file" id="file-upload" style="display:none">
     </div>
+    <!-- GUARDAR TODO-ESPERA -->
     <button class="button success large-12" id="guardar-todo">Guardar</button>
+    <button class="button large-12" id="en-espera" hidden style="display:none;">Guardando......</button>
+    <!-- GUARDAR TODO-ESPERA END-->
     <!-- FORMULARIO DE SERVICIO-> POR DEFECTO ESTADISTICA END-->
   </div>
   <!-- FORMULARIO END-->

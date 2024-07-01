@@ -669,12 +669,14 @@ function postEstadistica() {
       descripcion,
       tipoCliente,
     },
+    beforeSend: function () {
+      $("#en-espera").show();
+      $("#guardar-todo").hide();
+    },
     success: function (response) {
-      //console.log(response);
       confirmation(1, "Cotizacion de Estadistica Guardada!",1);
     },
     error: function (error) {
-      //console.log("ERROR EN LA PETICION ESTADISTICA: " + error);
       confirmation(0, "Falta rellenar el formulario");
     },
   });
@@ -722,6 +724,10 @@ function postSoftware() {
       descripcion,
       idcalcSoftware,
       tipoCliente,
+    }, 
+    beforeSend: function () {
+      $("#en-espera").show();
+      $("#guardar-todo").hide();
     },
     success: function (response) {
       //console.log(response);
@@ -778,6 +784,10 @@ function postRedes() {
     data: formData,
     processData: false, // No procesar los datos, es decir, enviar tal cual
     contentType: false, // No establecer ningún tipo de contenido
+    beforeSend: function () {
+      $("#en-espera").show();
+      $("#guardar-todo").hide();
+    },
     success: function (response) {
       //console.log(response);
       confirmation(1, "Cotizacion de Redes Guardada!",1);
