@@ -87,7 +87,7 @@
           <div class="cell margin-top-3">
             <ul class="vertical menu">
               <li>
-                <a href="#">
+                <a href="<?php echo constant('URL') ?>configuracion">
                   <i class="fas fa-gears"></i>
                   <span class="nav-item">Configuracion</span>
                 </a>

@@ -38,7 +38,7 @@
 		<div class="cell large-9 grid-x grid-margin-x grid-margin-y">
 			<div class="cell large-6 medium-12 small-12">
 				<div class="cell">
-					<h4>GRAFICO DE BARRAS</h4>
+					<h4>Distribución del Estado de las Cotizaciones</h4>
 				</div>
 				<div class="cell">
 					<canvas id="barras"></canvas>
@@ -46,7 +46,7 @@
 			</div>
 			<div class="cell large-6 medium-12 small-12">
 				<div class="cell">
-					<h4>GRAFICO LINEAL</h4>
+					<h4>Total de Cotizaciones por Mes</h4>
 				</div>
 				<div class="cell">
 					<canvas id="lineal"></canvas>
@@ -62,7 +62,7 @@
 			</div>
 			<div class="cell large-6 medium-12 small-12">
 				<div class="cell">
-					<h4>GRAFICO PASTEL</h4>
+					<h4>Proporción de Ventas por Servicio</h4>
 				</div>
 				<div class="cell">
 					<canvas id="pastel"></canvas>

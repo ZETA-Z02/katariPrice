@@ -190,7 +190,7 @@ class Cotizacion extends Controller
 				$idcotizacion = $this->model->conn->conn->insert_id;
 				$this->proforma([$idcotizacion],true);
 				$data = $this->model->Proforma($idcotizacion);
-				$this->email($data['email'],$idcotizacion);	
+				$this->email($data['email'],$idcotizacion);
 			} else {
 				echo "ERROR EN LA INSERCION";
 			}
