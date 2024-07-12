@@ -54,7 +54,7 @@
 			</div>
 			<div class="cell large-6 medium-12 small-12">
 				<div class="cell">
-					<h4>GRAFICO POLAR AREA</h4>
+					<h4>Cotizaciones por Personal</h4>
 				</div>
 				<div class="cell">
 					<canvas id="area"></canvas>

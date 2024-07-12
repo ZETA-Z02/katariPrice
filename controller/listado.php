@@ -335,9 +335,10 @@ class Listado extends Controller
 			echo "ERROR EN LA ACTUALIZACION";
 		}
 	}
-	// CAMBIAR ESTADO DE PROYECTOS END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
 
+	// CAMBIAR ESTADO DE PROYECTOS END*/-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-
 	// ++-+-+--+-+-+-+--++--+--PROYECTO AVANCES+-++-+-+-+-+-+--+-+-+-+-+-+-+-+-+-+-+-
+	
 	public function proyectoAvances($nparam = null)
 	{
 		$id = $nparam[0];

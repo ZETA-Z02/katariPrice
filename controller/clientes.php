@@ -10,10 +10,8 @@ class Clientes extends Controller
 	{
 		$this->view->Render('clientes/index');
 	}
-	
 	// muestra a la perosa natural
 	
-
 	public function verNatural(){
 		$data = $this->model->VerNatural();
 		$json = array();
@@ -46,7 +44,6 @@ class Clientes extends Controller
 		echo json_encode($json);
 
 	}
-	
 	// busaca a la persona juridica
 
 	public function buscarJuridica(){
@@ -111,8 +108,6 @@ class Clientes extends Controller
         echo json_encode(["error" => "Error al actualizar los datos"]);
     	}
 	}
-
-
 // busca a la persona natural 
 	public function buscarNatural() {
 		$query = $_GET['query'];

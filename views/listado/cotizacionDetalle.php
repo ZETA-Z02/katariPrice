@@ -60,7 +60,9 @@
                 <button class="button alert" id="cancelar">Cotizacion Cancelada</button>
             </div>
             <div class="cell large-6">
-                <button class="button" id="aceptar">Cotizacion Aceptada</button>
+                <!-- <button class="button" id="aceptar"><a href="<?php echo constant('URL').'cotizacion/proforma2/'.$this->data['idcotizacion'];?>">Cotizacion Aceptada</a></button> -->
+                <a class="button" id="aceptar" href="<?php echo constant('URL').'cotizacion/proforma2/'.$this->data['idcotizacion'];?>" target="_blank">Cotizacion Aceptada</a>
+                <!-- <button class="button" id="aceptar">Cotizacion Aceptada</button> -->
             </div>
             <?php if($this->data['estado']!=='cancelado' && $this->data2['total']==0){?>
                 <div class="cell">

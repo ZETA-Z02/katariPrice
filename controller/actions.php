@@ -5,7 +5,7 @@ class Actions extends Controller
     {
         parent::__construct();
     }
-    function dni()
+    public function dni()
     {
         // Datos
         $token = 'apis-token-8574.bPsef4wHOYjVwA7bFoDMZqLLrNrAMKiY';
@@ -46,11 +46,22 @@ class Actions extends Controller
 
 
     }
-    function ruc()
+    public function ruc()
     {
         $ruc = $_POST["ruc"];
         $consulta = file_get_contents('https://api.apis.net.pe/v1/ruc?numero=' . $ruc . '');
         echo $consulta;
     }
-
+    public function caducidad(){
+        $feCaducidad = $this->model->Caducidad();
+        while ($row = mysqli_fetch_assoc($feCaducidad)) {
+            //echo 'caducidad->'. $row['feLimite'] .'->Estado->'. $row['estado'].'->ID'. $row['idcotizacion'].'<br>';            
+            try{
+                $this->model->UpdateCotizacion($row['idcotizacion']);
+                //echo $row['idcotizacion'];
+            }catch(Exception $e){
+                echo 'error->'. $e;    
+            }
+        }
+    }
 }
